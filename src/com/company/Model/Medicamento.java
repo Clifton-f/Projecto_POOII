@@ -5,7 +5,7 @@ import java.sql.*;
 public class Medicamento {
     private String batchNo;
     private String nome_comercial;
-    private String nome_genérico;
+    private String nome_generico;
     private Date validade;
     private int stock;
     private int preco_compra;
@@ -31,12 +31,12 @@ public class Medicamento {
         this.nome_comercial = nome_comercial;
     }
 
-    public String getNome_genérico() {
-        return nome_genérico;
+    public String getNome_generico() {
+        return nome_generico;
     }
 
-    public void setNome_genérico(String nome_genérico) {
-        this.nome_genérico = nome_genérico;
+    public void setNome_generico(String nome_generico) {
+        this.nome_generico = nome_generico;
     }
 
     public Date getValidade() {
@@ -108,7 +108,7 @@ public class Medicamento {
     public String toString() {
         return "'" + batchNo +
                 "', '" + nome_comercial +
-                "', '" + nome_genérico +
+                "', '" + nome_generico +
                 "', '" + validade +
                 "', '" + preco_compra +
                 "', '" + preco_venda +
