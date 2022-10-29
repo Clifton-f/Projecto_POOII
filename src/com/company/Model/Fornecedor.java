@@ -26,12 +26,13 @@ public class Fornecedor {
         return contacto;
     }
 
-    public void setContacto(String contacto){
-
-    }
 
     public String getNome() {
         return nome;
+    }
+
+    public void setContacto(String contacto) {
+        this.contacto = contacto;
     }
 
     public void setNome(String nome) {

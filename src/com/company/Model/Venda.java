@@ -1,15 +1,16 @@
 package com.company.Model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Venda {
     private int idVenda;
-    private Date data;
+    private Timestamp data;
     private int valor_total;
     private int desconto;
     private int valor_pago;
 
-    public Venda(int idVenda, Date data, int valor_total, int desconto, int valor_pago) {
+    public Venda(int idVenda, Timestamp data, int valor_total, int desconto, int valor_pago) {
         this.idVenda = idVenda;
         this.data = data;
         this.valor_total = valor_total;
@@ -25,11 +26,11 @@ public class Venda {
         this.idVenda = idVenda;
     }
 
-    public Date getData() {
+    public Timestamp getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Timestamp data) {
         this.data = data;
     }
 
