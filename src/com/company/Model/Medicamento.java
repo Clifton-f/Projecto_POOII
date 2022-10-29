@@ -7,11 +7,13 @@ public class Medicamento {
     private String nome_comercial;
     private String nome_genérico;
     private Date validade;
-    private int quantidade;
+    private int stock;
     private int preco_compra;
     private int preco_venda;
-    private String classe;
-    private String Contacto;
+    private String classificacao;
+    private String contacto;
+    private String descricao;
+
 
     public String getBatchNo() {
         return batchNo;
@@ -45,12 +47,12 @@ public class Medicamento {
         this.validade = validade;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public int getPreco_compra() {
@@ -69,19 +71,50 @@ public class Medicamento {
         this.preco_venda = preco_venda;
     }
 
-    public String getClasse() {
-        return classe;
+    public String getClassificacao() {
+        return classificacao;
     }
 
-    public void setClasse(String classe) {
-        this.classe = classe;
+    public void setClassificacao(String classificacao) {
+        this.classificacao = classificacao;
     }
 
     public String getContacto() {
-        return Contacto;
+        return contacto;
     }
 
     public void setContacto(String contacto) {
-        Contacto = contacto;
+        this.contacto = contacto;
+    }
+
+    public Medicamento(String batchNo, String nome_comercial, Date validade, int quantidade, int preco_compra, int preco_venda) {
+        this.batchNo = batchNo;
+        this.nome_comercial = nome_comercial;
+        this.validade = validade;
+        this.stock = quantidade;
+        this.preco_compra = preco_compra;
+        this.preco_venda = preco_venda;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return "'" + batchNo +
+                "', '" + nome_comercial +
+                "', '" + nome_genérico +
+                "', '" + validade +
+                "', '" + preco_compra +
+                "', '" + preco_venda +
+                "', '" + classificacao +
+                "', '" + contacto +
+                "', '" + descricao +
+                "', '" + stock +"'";
     }
 }

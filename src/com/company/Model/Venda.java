@@ -5,6 +5,17 @@ import java.sql.Date;
 public class Venda {
     private int idVenda;
     private Date data;
+    private int valor_total;
+    private int desconto;
+    private int valor_pago;
+
+    public Venda(int idVenda, Date data, int valor_total, int desconto, int valor_pago) {
+        this.idVenda = idVenda;
+        this.data = data;
+        this.valor_total = valor_total;
+        this.desconto = desconto;
+        this.valor_pago = valor_pago;
+    }
 
     public int getIdVenda() {
         return idVenda;
@@ -46,8 +57,5 @@ public class Venda {
         this.valor_pago = valor_pago;
     }
 
-    private int valor_total;
-    private int desconto;
-    private int valor_pago;
 
 }

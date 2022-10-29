@@ -6,20 +6,20 @@ public class Fornecedor {
     private String endereco;
     private String email;
 
-    public Fornecedor(String contacto, String nome) {
+
+    public Fornecedor(String contacto, String nome, String endereco, String email) {
         this.contacto = contacto;
         this.nome = nome;
+        this.endereco = endereco;
+        this.email = email;
     }
-
-
-
 
     @Override
     public String toString() {
-        return contacto + ", " +
-                ", " + nome +
-                ", " + endereco +
-                ", " + email;
+        return " '"+contacto + "' " +
+                ", '" + nome +
+                "', '" + email+
+                "', '" + endereco +"'";
     }
 
     public String getContacto() {

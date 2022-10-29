@@ -5,6 +5,12 @@ public class VendaMedicamento {
     private String idVenda;
     private int quantidade;
 
+    public VendaMedicamento(String batchNo, String idVenda, int quantidade) {
+        this.batchNo = batchNo;
+        this.idVenda = idVenda;
+        this.quantidade = quantidade;
+    }
+
     public String getBatchNo() {
         return batchNo;
     }

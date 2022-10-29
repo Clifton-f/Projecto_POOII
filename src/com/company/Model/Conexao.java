@@ -34,28 +34,76 @@ public class Conexao {
             e.printStackTrace();
         }
     }
-    public void consulta(){
-        try {
-            resultados = statement.executeQuery("select * from fornecedor");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public void fornecedorInsercao(Object tabela){
-        if (tabela instanceof Fornecedor){
+    public void consulta(Object tabela){
+
+        if (tabela instanceof Venda){
             try {
-                resultados = statement.executeQuery("INSERT INTO `fornecedor` (`contacto`, `nome`, `email`, `endereco`) VALUES ("+tabela.toString()+")");
+                resultados = statement.executeQuery("select * FROM fornecedor" +
+                        "WHERE ");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
 
+    }
+    public void insercao(Object tabela){
+        String query;
+        if (tabela instanceof Fornecedor){
+            try {
+                query ="INSERT INTO `fornecedor` (`contacto`, `nome`, `email`, `endereco`) VALUES ("+tabela.toString()+");";
+                statement.executeUpdate(query);
+                /*statement.executeUpdate("INSERT INTO fornecedor" +
+                        " VALUES (" + tabela.toString() + ")");*/
 
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(tabela instanceof Medicamento){
+            query ="INSERT INTO `medicamento`(`batchNo`, `nome_comercial`, `nome_genérico`, `validade`," +
+                    " `preco_compra`, `preco_venda`, `classificacao`, `contacto`, `descricao`,`stock´) VALUES ("+tabela.toString()+");";
+            try {
+                statement.executeUpdate(query);
+
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        else if(tabela instanceof Venda) {
+            query = "INSERT INTO `fornecedor` (`contacto`, `nome`, `email`, `endereco`) VALUES (" + tabela.toString() + ");";
+            try {
+                statement.executeUpdate(query);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(tabela instanceof Funcionario) {
+            query = "INSERT INTO `funcionario`(`apelido`, `pNome`, `data_nascimento`, `contacto`, `idFuncionario`, `email`)" +
+                    " VALUES (" + tabela.toString() + ");";
+            try {
+                statement.executeUpdate(query);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
     public static void main(String []args){
+        Conexao conexao = new Conexao();
+        Date data = new Date(2077,8,2);
+        Funcionario funcionario = new Funcionario("Inculta","Vulpes",data,"856638515",001,"vulpesfumentari@legion.com");
+        conexao.insercao(funcionario);
         String nome = "Da fonseca";
         String pn = "Clifton Fernandes";
         nome+=", "+pn;

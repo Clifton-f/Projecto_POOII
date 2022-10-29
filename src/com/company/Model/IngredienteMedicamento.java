@@ -21,6 +21,12 @@ public class IngredienteMedicamento {
         this.nome = nome;
     }
 
+    public IngredienteMedicamento(String batchNo, String nome, int quantidade) {
+        this.batchNo = batchNo;
+        this.nome = nome;
+        this.quantidade = quantidade;
+    }
+
     public int getQuantidade() {
         return quantidade;
     }
