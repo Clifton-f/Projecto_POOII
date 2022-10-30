@@ -54,6 +54,14 @@ public class Conexao {
             try {
                 statement.executeUpdate(query);
 
+                for(int i = 0; i<((Medicamento) tabela).getIngredientes().size();i++){
+
+                    query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES ('"+((Medicamento) tabela).getBatchNo()+"',"+((Medicamento) tabela).getIngredientes().get(i)+")";
+                    statement.executeUpdate(query);
+
+                }
+
+
             }catch (SQLException e) {
                 e.printStackTrace();
             }

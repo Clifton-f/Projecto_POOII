@@ -16,6 +16,7 @@ public class Venda {
         this.valor_total = valor_total;
         this.desconto = desconto;
         this.valor_pago = valor_pago;
+
     }
 
     public int getIdVenda() {

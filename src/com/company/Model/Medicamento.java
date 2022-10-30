@@ -1,6 +1,7 @@
 package com.company.Model;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Medicamento {
     private String batchNo;
@@ -13,7 +14,15 @@ public class Medicamento {
     private String classificacao;
     private String contacto;
     private String descricao;
+    ArrayList<Ingrediente> ingredientes = new ArrayList<>();
 
+    public ArrayList<Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+
+    public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
+    }
 
     public String getBatchNo() {
         return batchNo;
