@@ -24,15 +24,40 @@ public class Conexao {
             e.printStackTrace();
         }
     }
-    public void consulta(Object tabela){
+    public void consulta(Object tabela, String []atributos, String []valores){
+
+        StringBuilder parametros;
+        String query = "SELECT * FROM ";
+        parametros = new StringBuilder("WHERE " + atributos[0] + " = " + valores[0]);
+        for (int i=1;i<atributos.length;i++){
+            parametros.append("AND ").append(atributos[i]).append(" = ").append(valores[i]);
+
+
+        }
 
         if (tabela instanceof Venda){
-            try {
-                resultados = statement.executeQuery("select * FROM fornecedor" +
-                        "WHERE ");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+           query += "venda "+parametros+";";
+        } else if(tabela instanceof Medicamento){
+            query += "medicamento "+parametros+";";
+        }
+        else if(tabela instanceof Fornecedor){
+            query += "fornecedor "+parametros+";";
+        }
+        else if(tabela instanceof Funcionario) {
+            query += "funcionario " + parametros + ";";
+        }
+        else if(tabela instanceof Item) {
+            query += "vendamedicamento " + parametros + ";";
+        }
+        else if(tabela instanceof Ingrediente) {
+            query += "ingredientemedicamento " + parametros + ";";
+        }
+
+        try {
+
+            resultados = statement.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
@@ -56,7 +81,8 @@ public class Conexao {
 
                 for(int i = 0; i<((Medicamento) tabela).getIngredientes().size();i++){
 
-                    query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES ('"+((Medicamento) tabela).getBatchNo()+"',"+((Medicamento) tabela).getIngredientes().get(i)+")";
+                    query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES ('"
+                            +((Medicamento) tabela).getBatchNo()+"',"+((Medicamento) tabela).getIngredientes().get(i)+");";
                     statement.executeUpdate(query);
 
                 }
@@ -109,7 +135,8 @@ public class Conexao {
     public static void main(String []args){
         Conexao conexao = new Conexao();
         Date data = new Date(2077,8,2);
-        Funcionario funcionario = new Funcionario("Inculta","Vulpes",data,"856638515",1,"vulpesfumentari@legion.com");
+        Funcionario funcionario = new Funcionario("Inculta","Vulpes",data,
+                "856638515",1,"vulpesfumentari@legion.com");
         conexao.insercao(funcionario);
         System.out.println(funcionario);
         String nome = "Da fonseca";
