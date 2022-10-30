@@ -2,6 +2,7 @@ package com.company.Model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Venda {
     private int idVenda;
@@ -9,6 +10,15 @@ public class Venda {
     private int valor_total;
     private int desconto;
     private int valor_pago;
+    private ArrayList<Item> itens = new ArrayList<>();
+
+    public ArrayList<Item> getItens() {
+        return itens;
+    }
+
+    public void setItens(ArrayList<Item> itens) {
+        this.itens = itens;
+    }
 
     public Venda(int idVenda, Timestamp data, int valor_total, int desconto, int valor_pago) {
         this.idVenda = idVenda;

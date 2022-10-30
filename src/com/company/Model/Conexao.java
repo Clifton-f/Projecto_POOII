@@ -71,6 +71,14 @@ public class Conexao {
             query = "INSERT INTO `venda`(`idVenda`, `data`, `valor_total`, `desconto`, `valor_pago`) VALUES (" + tabela + ");";
             try {
                 statement.executeUpdate(query);
+                for (int i=0; i< ((Venda) tabela).getItens().size();i++){
+
+                    query="INSERT INTO `vendamedicamento`(`batchNo`, `idVenda`, `quantidade`) VALUES ("
+                            + ((Venda) tabela).getIdVenda()+((Venda) tabela).getItens().get(i).toString()+")";
+                    statement.executeUpdate(query);
+
+
+                }
 
 
             } catch (SQLException e) {
@@ -82,6 +90,7 @@ public class Conexao {
                     " VALUES (" + tabela + ");";
             try {
                 statement.executeUpdate(query);
+
 
             } catch (SQLException e) {
                 e.printStackTrace();

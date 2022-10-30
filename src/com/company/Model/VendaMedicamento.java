@@ -1,23 +1,14 @@
 package com.company.Model;
 
 public class VendaMedicamento {
-    private String batchNo;
     private String idVenda;
     private int quantidade;
 
     public VendaMedicamento(String batchNo, String idVenda, int quantidade) {
-        this.batchNo = batchNo;
         this.idVenda = idVenda;
         this.quantidade = quantidade;
     }
 
-    public String getBatchNo() {
-        return batchNo;
-    }
-
-    public void setBatchNo(String batchNo) {
-        this.batchNo = batchNo;
-    }
 
     public String getIdVenda() {
         return idVenda;
@@ -33,5 +24,13 @@ public class VendaMedicamento {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "'" + idVenda +
+                "','" + quantidade +
+                "'";
     }
 }
