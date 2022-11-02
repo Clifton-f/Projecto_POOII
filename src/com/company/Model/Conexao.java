@@ -1,12 +1,14 @@
 package com.company.Model;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class Conexao {
     Connection connection;
     Statement statement;
-    ResultSet resultados;
+    ResultSet resultSet;
+    ArrayList<Object> resultados;
 
 
 
@@ -24,7 +26,7 @@ public class Conexao {
             e.printStackTrace();
         }
     }
-    public void consulta(Object tabela, String []atributos, String []valores){
+    public ArrayList<Object> consultaEqual(Object tabela, String []atributos, String []valores){
 
         StringBuilder parametros;
         String query = "SELECT * FROM ";
@@ -34,6 +36,8 @@ public class Conexao {
 
 
         }
+
+
 
         if (tabela instanceof Venda){
            query += "venda "+parametros+";";
@@ -55,10 +59,94 @@ public class Conexao {
 
         try {
 
-            resultados = statement.executeQuery(query);
+            resultSet = statement.executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return resultados;
+
+
+    }
+    public ArrayList<Object> consultaLike(Object tabela, String []atributos, String []valores){
+
+        StringBuilder parametros;
+        String query = "SELECT * FROM ";
+        parametros = new StringBuilder("WHERE " + atributos[0] + " like " + valores[0]);
+        for (int i=1;i<atributos.length;i++){
+            parametros.append("AND ").append(atributos[i]).append(" = ").append(valores[i]);
+
+
+        }
+
+
+
+        if (tabela instanceof Venda){
+            query += "venda "+parametros+";";
+        } else if(tabela instanceof Medicamento){
+            query += "medicamento "+parametros+";";
+        }
+        else if(tabela instanceof Fornecedor){
+            query += "fornecedor "+parametros+";";
+        }
+        else if(tabela instanceof Funcionario) {
+            query += "funcionario " + parametros + ";";
+        }
+        else if(tabela instanceof Item) {
+            query += "vendamedicamento " + parametros + ";";
+        }
+        else if(tabela instanceof Ingrediente) {
+            query += "ingredientemedicamento " + parametros + ";";
+        }
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultados;
+
+
+    }
+    public ArrayList<Object> consultaIn(Object tabela, String []atributos, String []valores){
+
+        StringBuilder parametros;
+        String query = "SELECT * FROM ";
+        parametros = new StringBuilder("WHERE " + atributos[0] + " In " + valores[0]);
+        for (int i=1;i<atributos.length;i++){
+            parametros.append("AND ").append(atributos[i]).append(" = ").append(valores[i]);
+
+
+        }
+
+
+
+        if (tabela instanceof Venda){
+            query += "venda "+parametros+";";
+        } else if(tabela instanceof Medicamento){
+            query += "medicamento "+parametros+";";
+        }
+        else if(tabela instanceof Fornecedor){
+            query += "fornecedor "+parametros+";";
+        }
+        else if(tabela instanceof Funcionario) {
+            query += "funcionario " + parametros + ";";
+        }
+        else if(tabela instanceof Item) {
+            query += "vendamedicamento " + parametros + ";";
+        }
+        else if(tabela instanceof Ingrediente) {
+            query += "ingredientemedicamento " + parametros + ";";
+        }
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultados;
+
 
     }
     public void insercao(Object tabela){
@@ -133,15 +221,6 @@ public class Conexao {
     }
 
     public static void main(String []args){
-        Conexao conexao = new Conexao();
-        Date data = new Date(2077,8,2);
-        Funcionario funcionario = new Funcionario("Inculta","Vulpes",data,
-                "856638515",1,"vulpesfumentari@legion.com");
-        conexao.insercao(funcionario);
-        System.out.println(funcionario);
-        String nome = "Da fonseca";
-        String pn = "Clifton Fernandes";
-        nome+=", "+pn;
-        System.out.println(nome);
+
     }
 }
