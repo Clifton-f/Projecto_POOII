@@ -11,49 +11,41 @@ public class Conexao {
     ArrayList<Object> resultados;
 
 
-
-
-    public Conexao(){
+    public Conexao() {
         try {
-            connection = DriverManager.getConnection("JDBC:mysql://localhost:3306/farmacia","root","");
+            connection = DriverManager.getConnection("JDBC:mysql://localhost:3306/farmacia", "root", "");
 
             statement = connection.createStatement();
 
 
-
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public ArrayList<Object> consultaEqual(Object tabela, String []atributos, String []valores){
+
+    public ArrayList<Object> consultalista(Object tabela, String[] atributos, String[] valores) {
 
         StringBuilder parametros;
         String query = "SELECT * FROM ";
         parametros = new StringBuilder("WHERE " + atributos[0] + " = " + valores[0]);
-        for (int i=1;i<atributos.length;i++){
+        for (int i = 1; i < atributos.length; i++) {
             parametros.append("AND ").append(atributos[i]).append(" = ").append(valores[i]);
 
 
         }
 
 
-
-        if (tabela instanceof Venda){
-           query += "venda "+parametros+";";
-        } else if(tabela instanceof Medicamento){
-            query += "medicamento "+parametros+";";
-        }
-        else if(tabela instanceof Fornecedor){
-            query += "fornecedor "+parametros+";";
-        }
-        else if(tabela instanceof Funcionario) {
+        if (tabela instanceof Venda) {
+            query += "venda " + parametros + ";";
+        } else if (tabela instanceof Medicamento) {
+            query += "medicamento " + parametros + ";";
+        } else if (tabela instanceof Fornecedor) {
+            query += "fornecedor " + parametros + ";";
+        } else if (tabela instanceof Funcionario) {
             query += "funcionario " + parametros + ";";
-        }
-        else if(tabela instanceof Item) {
+        } else if (tabela instanceof Item) {
             query += "vendamedicamento " + parametros + ";";
-        }
-        else if(tabela instanceof Ingrediente) {
+        } else if (tabela instanceof Ingrediente) {
             query += "ingredientemedicamento " + parametros + ";";
         }
 
@@ -67,7 +59,124 @@ public class Conexao {
 
 
     }
-    public ArrayList<Object> consultaLike(Object tabela, String []atributos, String []valores){
+
+    public Venda consultaVenda(String[] atributos, String[] valores) {
+        String query = "SELECT * FROM venda ";
+        Venda venda = new Venda();
+        String parametros = buildQuery(atributos, valores);
+        query += "\n" + parametros + ";";
+
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+            resultSet.next();
+            venda = new Venda(resultSet.getInt(1),resultSet.getTimestamp(2),
+                    resultSet.getInt(3),resultSet.getFloat(4),resultSet.getInt(5));
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return venda;
+    }
+    public Medicamento consultaMedicamento(String[] atributos, String[] valores) {
+        String query = "SELECT * FROM medicamento ";
+        Medicamento medicamento =null;
+        String parametros = buildQuery(atributos, valores);
+        query += "\n" + parametros + ";";
+
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+            resultSet.next();
+            medicamento = new Medicamento(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getTimestamp(4),
+                    resultSet.getInt(5),resultSet.getInt(6),resultSet.getString(7),
+                    resultSet.getString(8),resultSet.getString(9),resultSet.getInt(10));
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return medicamento;
+    }
+    public Fornecedor consultaFornecedor(String[] atributos, String[] valores) {
+        String query = "SELECT * FROM fornecedor ";
+        Fornecedor fornecedor = null;
+        String parametros = buildQuery(atributos, valores);
+        query += "\n" + parametros + ";";
+
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+            resultSet.next();
+            fornecedor = new Fornecedor(resultSet.getString(1),resultSet.getString(2),resultSet.getString(4),
+                    resultSet.getString(3));
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return fornecedor;
+    }
+
+    public Funcionario consultaFuncionario(String[] atributos, String[] valores) {
+        String query = "SELECT * FROM funcionario ";
+        Funcionario funcionario = null;
+        String parametros = buildQuery(atributos, valores);
+        query += "\n" + parametros + ";";
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+            resultSet.next();
+            funcionario = new Funcionario(resultSet.getString(3), resultSet.getString(2),
+                    resultSet.getDate(4), resultSet.getString(6)
+                    , resultSet.getInt(1), resultSet.getString(5),
+                    resultSet.getString(7));
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return funcionario;
+    }
+
+    public Ingrediente consultaIngrediente(String[] atributos, String[] valores) {
+        String query = "SELECT * FROM ingrediente ";
+        Ingrediente ingrediente = new Ingrediente("s", "s", 4);
+        String parametros = buildQuery(atributos, valores);
+        query += "\n" + parametros + ";";
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+            resultSet.next();
+            ingrediente = new Ingrediente(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3));
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ingrediente;
+    }
+
+    public String buildQuery(String []atributos, String []valores) {
+        StringBuilder parametros;
+
+
+        parametros = new StringBuilder("WHERE " + atributos[0] + " = '" + valores[0] + "'");
+        for (int i = 1; i < atributos.length; i++) {
+            parametros.append("\n AND ").append(atributos[i]).append(" = '").append(valores[i]).append( "'");
+
+
+        }
+        return parametros.toString();
+    }
+
+    /**public ArrayList<Object> consultaLike(Object tabela, String []atributos, String []valores){
 
         StringBuilder parametros;
         String query = "SELECT * FROM ";
@@ -107,8 +216,8 @@ public class Conexao {
         return resultados;
 
 
-    }
-    public ArrayList<Object> consultaIn(Object tabela, String []atributos, String []valores){
+    }*/
+    /**public ArrayList<Object> consultaIn(Object tabela, String []atributos, String []valores){
 
         StringBuilder parametros;
         String query = "SELECT * FROM ";
@@ -148,7 +257,7 @@ public class Conexao {
         return resultados;
 
 
-    }
+    }*/
     public void insercao(Object tabela){
         String query;
         if (tabela instanceof Fornecedor){
@@ -221,6 +330,14 @@ public class Conexao {
     }
 
     public static void main(String []args){
+        Conexao conexao = new Conexao();
+        String email = "vulpesfumentari@legion.com",password = "caesarrules";
+        Funcionario usuario = new Funcionario(email,password);
+        String []valores = {email,password};
+        String []atributos = {"email", "password"};
+
+
+
 
     }
 }

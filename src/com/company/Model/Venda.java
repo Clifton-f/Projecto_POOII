@@ -8,9 +8,13 @@ public class Venda {
     private int idVenda;
     private Timestamp data;
     private int valor_total;
-    private int desconto;
+    private float desconto;
     private int valor_pago;
     private ArrayList<Item> itens = new ArrayList<>();
+
+    public Venda() {
+        this.idVenda = 2;
+    }
 
     public ArrayList<Item> getItens() {
         return itens;
@@ -20,7 +24,7 @@ public class Venda {
         this.itens = itens;
     }
 
-    public Venda(int idVenda, Timestamp data, int valor_total, int desconto, int valor_pago) {
+    public Venda(int idVenda, Timestamp data, int valor_total, float desconto, int valor_pago) {
         this.idVenda = idVenda;
         this.data = data;
         this.valor_total = valor_total;
@@ -53,7 +57,7 @@ public class Venda {
         this.valor_total = valor_total;
     }
 
-    public int getDesconto() {
+    public float getDesconto() {
         return desconto;
     }
 

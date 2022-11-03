@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class MedicamentoView extends JPanel implements ActionListener {
 
     JLabel []cabecalho= new JLabel[2];
-    JLabel []lblMedicamento = new JLabel[9];
+    JLabel []lblMedicamento = new JLabel[10];
     JTextField []txtMedicamento = new JTextField[9];
     JButton btnAdicionar = new JButton("Adicionar");
     JButton btnCancelar = new JButton("Cancelar");
@@ -28,14 +28,15 @@ public class MedicamentoView extends JPanel implements ActionListener {
         separator.setOrientation(JSeparator.HORIZONTAL);
 
         lblMedicamento[0] = new JLabel("BatchNo");
-        lblMedicamento[1] = new JLabel("Nome do medicamento");
+        lblMedicamento[1] = new JLabel("Nome comercial");
         lblMedicamento[2] = new JLabel("Nome genérico");
         lblMedicamento[3] = new JLabel("Fornecedor");
         lblMedicamento[4] = new JLabel("Validade");
         lblMedicamento[5] = new JLabel("Quantidade");
-        lblMedicamento[6] = new JLabel("Preço");
-        lblMedicamento[7] = new JLabel("Classificação");
-        lblMedicamento[8] = new JLabel("Categoria");
+        lblMedicamento[6] = new JLabel("Preço de venda");
+        lblMedicamento[7] = new JLabel("preço de compra");
+        lblMedicamento[8] = new JLabel("Classificação");
+        lblMedicamento[9] = new JLabel("Descrição");
 
         btnAdicionar.setForeground(atributo.getPainelCor());
         btnCancelar.setForeground(atributo.getPainelCor());

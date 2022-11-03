@@ -1,21 +1,17 @@
 package com.company.Model;
 
 public class Ingrediente {
+    private String batchNo;
     private String nome;
-    private int conceracao;
+    private int quantidade;
 
-    @Override
-    public String toString() {
-        return  "'" + nome  +
-                "', '" + conceracao +"'";
+    public String getBatchNo() {
+        return batchNo;
     }
 
-    public Ingrediente(String nome, int conceracao) {
-        this.nome = nome;
-        this.conceracao = conceracao;
+    public void setBatchNo(String batchNo) {
+        this.batchNo = batchNo;
     }
-
-
 
     public String getNome() {
         return nome;
@@ -25,13 +21,17 @@ public class Ingrediente {
         this.nome = nome;
     }
 
-    public int getConceracao() {
-        return conceracao;
+    public Ingrediente(String batchNo, String nome, int quantidade) {
+        this.batchNo = batchNo;
+        this.nome = nome;
+        this.quantidade = quantidade;
     }
 
-    public void setConceracao(int conceracao) {
-        this.conceracao = conceracao;
+    public int getQuantidade() {
+        return quantidade;
     }
 
-
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
 }

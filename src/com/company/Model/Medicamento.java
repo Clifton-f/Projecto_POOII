@@ -7,13 +7,28 @@ public class Medicamento {
     private String batchNo;
     private String nome_comercial;
     private String nome_generico;
-    private Date validade;
+    private Timestamp validade;
     private int stock;
     private int preco_compra;
     private int preco_venda;
     private String classificacao;
     private String contacto;
     private String descricao;
+
+    public Medicamento(String batchNo, String nome_comercial, String nome_generico, Timestamp validade, int preco_compra,
+                       int preco_venda, String classificacao, String contacto, String descricao, int stock) {
+        this.batchNo = batchNo;
+        this.nome_comercial = nome_comercial;
+        this.nome_generico = nome_generico;
+        this.validade = validade;
+        this.preco_compra = preco_compra;
+        this.preco_venda = preco_venda;
+        this.classificacao = classificacao;
+        this.contacto = contacto;
+        this.descricao = descricao;
+        this.stock = stock;
+    }
+
     ArrayList<Ingrediente> ingredientes = new ArrayList<>();
 
     public ArrayList<Ingrediente> getIngredientes() {
@@ -48,11 +63,11 @@ public class Medicamento {
         this.nome_generico = nome_generico;
     }
 
-    public Date getValidade() {
+    public Timestamp getValidade() {
         return validade;
     }
 
-    public void setValidade(Date validade) {
+    public void setValidade(Timestamp validade) {
         this.validade = validade;
     }
 
@@ -96,14 +111,17 @@ public class Medicamento {
         this.contacto = contacto;
     }
 
-    public Medicamento(String batchNo, String nome_comercial, Date validade, int quantidade, int preco_compra, int preco_venda) {
+    /*public Medicamento(String batchNo, String nome_comercial,String nome_generico, Timestamp validade, int quantidade, int preco_compra, int preco_venda) {
         this.batchNo = batchNo;
         this.nome_comercial = nome_comercial;
+        this.nome_generico = nome_generico;
         this.validade = validade;
         this.stock = quantidade;
         this.preco_compra = preco_compra;
         this.preco_venda = preco_venda;
-    }
+
+
+    }*/
 
     public String getDescricao() {
         return descricao;

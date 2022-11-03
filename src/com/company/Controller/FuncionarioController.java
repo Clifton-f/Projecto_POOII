@@ -1,9 +1,25 @@
 package com.company.Controller;
 
-public class FuncionarioController {
-    public boolean login(String password, String nome){
-        
+import com.company.Model.Conexao;
+import com.company.Model.Funcionario;
 
-    return true;
+public class FuncionarioController {
+    Funcionario usuario;
+    Conexao conexao = new Conexao();
+
+
+    public void login(String email, String password){
+        String []valores = {email,password};
+        String []atributos = {"email", "password"};
+
+
+    //return true;
+    }
+    public static void main(String []args){
+        FuncionarioController fc = new FuncionarioController();
+        fc.login("vulpesfumentari@legion.com","caesarrules");
+
+
+
     }
 }

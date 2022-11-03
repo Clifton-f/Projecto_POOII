@@ -11,6 +11,7 @@ public class Tela implements ActionListener{
     Login pnlLogin = new Login();
     FornecedorView pnlFornecedor = new FornecedorView();
 
+
     JPanel painel = new JPanel();
     CardLayout lyTela = new CardLayout();
     JPanel pnlCentro = new JPanel();

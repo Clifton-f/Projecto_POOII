@@ -9,6 +9,7 @@ private Date dataNascimento;
 private String contacto;
 private int idFuncionaro;
 private String email;
+private String password;
 
     public String getApelido() {
         return apelido;
@@ -60,13 +61,22 @@ private String email;
                 "', '" + email +"'";
     }
 
-    public Funcionario(String apelido, String pNome, Date dataNascimento, String contacto, int idFuncionaro, String email) {
+
+    public Funcionario(String apelido, String pNome, Date dataNascimento, String contacto, int idFuncionaro, String email, String password) {
         this.apelido = apelido;
         this.pNome = pNome;
         this.dataNascimento = dataNascimento;
         this.contacto = contacto;
         this.idFuncionaro = idFuncionaro;
         this.email = email;
+        this.password = password;
+    }
+
+    public Funcionario(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 }
+
+
 
