@@ -8,10 +8,15 @@ public class FuncionarioController {
     Conexao conexao = new Conexao();
 
 
-    public void login(String email, String password){
+    public boolean login(String email, String password){
         String []valores = {email,password};
         String []atributos = {"email", "password"};
-
+        if(true){
+            return true;
+        }
+        else {
+            return false;
+        }
 
     //return true;
     }

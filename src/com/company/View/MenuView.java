@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class MenuView {
 
-    Button buttons[];
+    Button []buttons;
     JLabel lblLogo = new JLabel();
     CustomizarView atributos = new CustomizarView();
     JPanel sidemenu = new JPanel();
@@ -23,15 +23,13 @@ public class MenuView {
         sidemenu.setBackground(atributos.getSidemenuCor());
         lblLogo.setSize(new Dimension(150,200));
         buttons = new Button[5];
-        buttons[0]=new Button("Compra");
+        buttons[0]=new Button("Venda");
         buttons[1]=new Button("Medicamento");
         buttons[2]=new Button("Fornecedor");
-        buttons[3]=new Button("Vendas");
-        buttons[4]=new Button("Funcionários");
+        buttons[3]=new Button("Funcionário");
+        buttons[4]=new Button("Venda");
 
-        GridBagConstraints constrntObj = new GridBagConstraints();
 
-        constrntObj.fill = GridBagConstraints.VERTICAL;
         sidemenu.add(lblLogo);
         for (int i = 0; i < 5; i++)
         {

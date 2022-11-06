@@ -2,8 +2,10 @@ package com.company.View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Login extends JPanel {
+public class Login  extends JPanel{
     JButton btnLogin = new JButton("Entrar");
     JButton btnRegistar = new JButton("Registar");
     JTextField txtUsername = new JTextField("Nome de usuário");
@@ -15,8 +17,10 @@ public class Login extends JPanel {
 
         btnLogin.setBackground(propriedades.getBotaoPCor());
         btnLogin.setFont(propriedades.getTextoCorpo());
+        btnLogin.setActionCommand("Login");
         btnRegistar.setBackground(propriedades.getBotaoPCor());
         btnRegistar.setFont(propriedades.getTextoCorpo());
+        btnRegistar.setActionCommand("Registar");
         txtUsername.setFont(propriedades.getTextoCorpo());
         password.setFont(propriedades.getTextoCorpo());
 
@@ -64,6 +68,7 @@ public class Login extends JPanel {
         tela.setSize(new Dimension(1280,720));
         tela.setVisible(true);
     }
+
 
 
 }

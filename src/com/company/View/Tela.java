@@ -1,5 +1,8 @@
 package com.company.View;
 
+import com.company.Controller.FornecedorController;
+import com.company.Controller.FuncionarioController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,28 +13,34 @@ public class Tela implements ActionListener{
     MedicamentoView pnlMedicamento = new MedicamentoView();
     Login pnlLogin = new Login();
     FornecedorView pnlFornecedor = new FornecedorView();
+    FuncionarioView pnlFuncionario = new FuncionarioView();
+    FornecedorController fornecedorController = new FornecedorController();
+    FuncionarioController funcionarioController = new FuncionarioController();
 
 
-    JPanel painel = new JPanel();
+
+    JPanel pnlTela = new JPanel();
     CardLayout lyTela = new CardLayout();
     JPanel pnlCentro = new JPanel();
     CardLayout lyCentro = new CardLayout();
     BorderLayout lyWorkspc = new BorderLayout();
     JPanel pnlWorkspc = new JPanel();
-    VendaView pnlVendas = new VendaView();
+    VendaView pnlVenda = new VendaView();
     MenuView pnlMenu = new MenuView();
 
 
     public Tela() {
-        /**window ou tela mesmo*/
+        pnlLogin.btnLogin.addActionListener(this);
+        pnlLogin.btnRegistar.addActionListener(this);
 
 
-        /**Segunda tela*/
+        /*Segunda tela*/
         //Centro
         pnlCentro.setLayout(lyCentro);
-        /**pnlCentro.add("Compra",pnl);
-        pnlCentro.add(pnlFornecedor,"fornecedor");
-        pnlCentro.add(pnlMedicamento,"medicamento");*/
+        pnlCentro.add("venda",pnlVenda);
+        pnlCentro.add("fornecedor",pnlFornecedor);
+        pnlCentro.add("medicamento",pnlMedicamento);
+        pnlCentro.add("funcionario",pnlFuncionario);
 
         //Oeste
         for(int i = 0; i<pnlMenu.buttons.length;i++){
@@ -41,23 +50,18 @@ public class Tela implements ActionListener{
         //adicoes
         pnlWorkspc.setLayout(lyWorkspc);
         pnlWorkspc.add(pnlMenu.sidemenu,BorderLayout.WEST);
-        //pnlWorkspc.add(pn, BorderLayout.CENTER);
 
-        //pnlWorkspc.add(pnlCompra,BorderLayout.CENTER);
 
-        //painel.add("Fornecedor",pnlFornecedor);
-        //painel.add("Login",pnlLogin);
-        pnlCentro.add("addvendas",pnlVendas);
-        pnlCentro.add(pnlFornecedor,"addfornecedor");
-        pnlCentro.add("addmedicamento", pnlMedicamento);
+
+
+
         pnlWorkspc.add(pnlCentro, BorderLayout.CENTER);
-        //painel.add("Medicamentos",pnlMedicamentos);
 
 
-        painel.setLayout(lyTela);
-        painel.add("login",pnlLogin);
-        painel.add("workspace",pnlWorkspc);
-        this.tela.add(painel);
+        pnlTela.setLayout(lyTela);
+        pnlTela.add("login",pnlLogin);
+        pnlTela.add("workspace",pnlWorkspc);
+        this.tela.add(pnlTela);
         pnlLogin.btnRegistar.addActionListener(this);
 
 
@@ -74,10 +78,7 @@ public class Tela implements ActionListener{
 
 
 
-    public void mostraWrkspc() {
-       lyTela.show(painel,"workspace");
 
-    }
 
 
 
@@ -86,18 +87,39 @@ public class Tela implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==pnlLogin.btnRegistar){
-            mostraWrkspc();
+        if (e.getSource() == pnlLogin.btnLogin){
+            if (funcionarioController.login(pnlLogin.txtUsername.getText(),new String(pnlLogin.password.getPassword()))){
+                lyTela.show(pnlTela,"workspace");
+
+            }
+
+        }else if(e.getSource() == pnlLogin.btnRegistar){
+            System.out.println("placeholder");
+
+
+        }else if(e.getSource() == pnlMenu.buttons[0]){
+            lyCentro.show(pnlCentro,"venda");
+
+
         }
-        if(e.getSource()==pnlMenu.buttons[0]){
-            lyCentro.show(pnlCentro,"addvenda");
+        else if(e.getSource() == pnlMenu.buttons[1]){
+            lyCentro.show(pnlCentro,"medicamento");
+
+
+
         }
-        if(e.getSource()==pnlMenu.buttons[1]){
-            lyCentro.show(pnlCentro,"addmedicamento");
+        else if(e.getSource() == pnlMenu.buttons[2]){
+            lyCentro.show(pnlCentro,"fornecedor");
+
+
+
         }
-        if(e.getSource()==pnlMenu.buttons[2]){
-            lyCentro.show(pnlCentro,"addfornecedor");
+        else if(e.getSource() == pnlMenu.buttons[3]){
+            lyCentro.show(pnlCentro,"funcionario");
+
+
         }
+
 
     }
 
