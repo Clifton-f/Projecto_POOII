@@ -2,6 +2,7 @@ package com.company.View;
 
 import com.company.Controller.MedicamentoController;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,22 +19,28 @@ public class MedicamentoView extends JPanel implements ActionListener {
     JLabel []lblDosagem = new JLabel[6];
     JSpinner spnData;
     JComboBox<String> cmbClassificacao;
-    JButton btnAdicionar = new JButton("Adicionar");
-    JButton btnCancelar = new JButton("Cancelar");
+    JButton btnNext = new JButton("Póximo");
+    JButton btnPrevious = new JButton("Anterior");
+    JButton btnSave = new JButton("Gravar");
     JSeparator separator = new JSeparator();
     CustomizarView atributo = new CustomizarView();
     GridLayout gl;
+    MedicamentoController mc = new MedicamentoController();
+    private CardLayout cl = new CardLayout();
+    private GridBagConstraints gbc = new GridBagConstraints();
+    private JPanel pnlPrimario = new JPanel();
+    private JPanel pnlSecundario = new JPanel();
 
 
     MedicamentoController controller = new MedicamentoController();
     public MedicamentoView(){
-        this.setBackground(atributo.getPainelCor());
+
+        pnlPrimario.setBackground(atributo.getPainelCor());
 
 
         cabecalho[0] = new JLabel("Adicionar Medicamento");
         cabecalho[0].setFont(atributo.getTextoH1());
         cabecalho[0].setForeground(atributo.getTextoCor());
-
         cabecalho[1] = new JLabel("Informação do Medicamento");
         separator.setOrientation(JSeparator.HORIZONTAL);
 
@@ -64,29 +71,29 @@ public class MedicamentoView extends JPanel implements ActionListener {
         txaDescricao.setPreferredSize(atributo.getTamanhoMax());
         txaDescricao.setFont(atributo.getTextoCorpo());
 
-        btnAdicionar.setForeground(atributo.getPainelCor());
-        btnCancelar.setForeground(atributo.getPainelCor());
-
-
-        btnAdicionar.setBackground(atributo.getBotaoPCor());
-        btnCancelar.setBackground(atributo.getBotaoNCor());
-
-
+        btnNext.setForeground(atributo.getPainelCor());
+        btnNext.setBackground(atributo.getBotaoPCor());
+        btnNext.addActionListener(this);
+        btnPrevious.setForeground(atributo.getPainelCor());
+        btnPrevious.setBackground(atributo.getBotaoNCor());
+        btnPrevious.addActionListener(this);
 
         Date hj = new Date();
         spnData = new JSpinner(new SpinnerDateModel(hj,null,null, Calendar.MONTH));
         JSpinner.DateEditor editor = new JSpinner.DateEditor(spnData, "dd/MM/yyyy");
         spnData.setEditor(editor);
+        spnData.setFont(atributo.getTextoCorpo());
+
         for (int i = 0; i<8;i++){
             txtMedicamento[i] = new JTextField();
             txtMedicamento[i].setFont(atributo.getTextoCorpo());
 
             txtMedicamento[i].setForeground(atributo.getTextoCor());
+
             lblMedicamento[i].setFont(atributo.getTextoCorpo());
             lblMedicamento[i].setForeground(atributo.getTextoCor());
 
         }
-
         for(int i = 0; i<txtDosagem.length;i++){
             txtDosagem[i] = new JTextField();
             txtDosagem[i].setForeground(atributo.getTextoCor());
@@ -94,29 +101,41 @@ public class MedicamentoView extends JPanel implements ActionListener {
 
 
         }
+        setPnlPrimario();
+        setPnlSecundario();
+        this.setLayout(cl);
+        this.add("1",pnlPrimario);
+        this.add("2",pnlSecundario);
 
+    }
 
+    private void setPnlPrimario(){
         GridBagLayout gbl = new GridBagLayout();
-        GridBagConstraints gbc = new GridBagConstraints();
+
+        pnlPrimario.setLayout(gbl);
+
+
         gbc.weightx=1;
         gbc.weighty=0;
         gbc.ipady = 5;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor=GridBagConstraints.FIRST_LINE_START;
 
-        this.setLayout(gbl);
-        /**
-         * Add cabecalho
-         * */
-        gbc.gridy = 0;
-        this.add(cabecalho[0],gbc);
+        JLabel lblTitulo = new JLabel("Adicionar Medicamento");
+        JLabel lblSubtitulo = new JLabel("Informação do Medicamento");
+
+
+        lblTitulo.setFont(atributo.getTextoH1());
+        lblTitulo.setForeground(atributo.getTextoCor());
         gbc.gridy = 1;
+        pnlPrimario.add(lblTitulo,gbc);
+        gbc.gridy = 2;
         gbc.gridx = 0;
-        cabecalho[1].setFont(atributo.getTextoH2());
+        //cabecalho[1].setFont(atributo.getTextoH2());
         gbc.insets=new Insets(10,15,30,15);
-        this.add(cabecalho[1],gbc);
 
 
+        pnlPrimario.add(lblSubtitulo,gbc);
 
         /**
          * Add Formulario
@@ -127,11 +146,12 @@ public class MedicamentoView extends JPanel implements ActionListener {
         gbc.gridwidth = 4;
         gbc.ipady = 5;
         gbc.gridy = 3;
-        this.add(lblMedicamento[0],gbc);
+        pnlPrimario.add(lblMedicamento[0],gbc);
+
 
         gbc.gridy =4;
         gbc.ipady = 10;
-        this.add(txtMedicamento[0],gbc);
+        pnlPrimario.add(txtMedicamento[0],gbc);
 
 
         gbc.gridwidth = 1;
@@ -139,20 +159,12 @@ public class MedicamentoView extends JPanel implements ActionListener {
         gbc.ipady = 5;
         gbc.gridy = 3;
 
-        this.add(lblMedicamento[4],gbc);
+        pnlPrimario.add(lblMedicamento[4],gbc);
         gbc.gridy =4;
         gbc.ipady = 10;
-        this.add(spnData,gbc);
+        pnlPrimario.add(spnData,gbc);
 
-        gbc.gridx = 5;
-        gbc.gridwidth = 1;
-        gbc.ipady = 5;
-        gbc.gridy = 3;
 
-        this.add(lblDosagem[0],gbc);
-        gbc.gridy =4;
-        gbc.ipady = 10;
-        this.add(txtDosagem[0],gbc);
         for(int i=1; i<4; i++){
 
             gbc.gridx=0;
@@ -160,56 +172,48 @@ public class MedicamentoView extends JPanel implements ActionListener {
             gbc.ipady = 5;
             gbc.gridy = 3+2*i;
 
-            this.add(lblMedicamento[i],gbc);
+            pnlPrimario.add(lblMedicamento[i],gbc);
             gbc.gridy =2*i+4;
             gbc.ipady = 10;
-            this.add(txtMedicamento[i],gbc);
+            pnlPrimario.add(txtMedicamento[i],gbc);
+
 
             gbc.gridwidth = 1;
             gbc.gridx = 4;
             gbc.ipady = 5;
             gbc.gridy = 3+2*i;
 
-            this.add(lblMedicamento[i+4],gbc);
+            pnlPrimario.add(lblMedicamento[i+4],gbc);
             gbc.gridy =2*i+4;
             gbc.ipady = 10;
-            this.add(txtMedicamento[i+3],gbc);
+            pnlPrimario.add(txtMedicamento[i+3],gbc);
 
-            gbc.gridx = 5;
-            gbc.gridwidth = 1;
-            gbc.ipady = 5;
-            gbc.gridy = 3+2*i;
-
-            this.add(lblDosagem[i],gbc);
-            gbc.gridy =2*i+4;
-            gbc.ipady = 10;
-            this.add(txtDosagem[i],gbc);
 
 
 
         }
         gbc.gridx = 4;
         gbc.gridy = 11;
-        this.add(lblMedicamento[9],gbc);
+        lblMedicamento[9].setFont(atributo.getTextoCorpo());
+        lblMedicamento[9].setForeground(atributo.getTextoCor());
+        pnlPrimario.add(lblMedicamento[9],gbc);
         gbc.gridy = 12;
         gbc.gridheight = 1;
-        this.add(txtMedicamento[7],gbc);
+        pnlPrimario.add(txtMedicamento[7],gbc);
         gbc.gridheight = 1;
         gbc.gridx = 0;
         gbc.gridy = 11;
-        this.add(lblMedicamento[8], gbc);
+        pnlPrimario.add(lblMedicamento[8], gbc);
+        lblMedicamento[8].setFont(atributo.getTextoCorpo());
+        lblMedicamento[8].setForeground(atributo.getTextoCor());
         gbc.gridy = 12;
 
 
-        this.add(cmbClassificacao,gbc);
+        pnlPrimario.add(cmbClassificacao,gbc);
         /**
          * Add Botões*/
-        JPanel pnlBotoes = new JPanel();
-        gl = new GridLayout(1,2);
-        gl.setHgap(15);
-        pnlBotoes.setLayout(gl);
-        pnlBotoes.add(btnAdicionar);
-        pnlBotoes.add(btnCancelar);
+
+
         gbc.weighty=1;
         gbc.weightx=1;
         gbc.gridy=15;
@@ -218,8 +222,70 @@ public class MedicamentoView extends JPanel implements ActionListener {
         gbc.gridx = 0;
         gbc.fill = GridBagConstraints.NONE;
 
-        pnlBotoes.setBackground(atributo.getPainelCor());
-        this.add(pnlBotoes,gbc);
+        pnlPrimario.add(btnNext,gbc);
+
+
+    }
+
+    private void setPnlSecundario(){
+        GridBagLayout gbl = new GridBagLayout();
+        gbc.gridheight=1;
+        gbc.weightx=1;
+        gbc.weighty=0;
+        gbc.ipady = 5;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor=GridBagConstraints.FIRST_LINE_START;
+
+        pnlSecundario.setLayout(gbl);
+
+
+        gbc.weightx=1;
+        gbc.weighty=0;
+        gbc.ipady = 5;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor=GridBagConstraints.FIRST_LINE_START;
+
+        gbc.gridy = 0;
+        pnlSecundario.add(cabecalho[0],gbc);
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        cabecalho[1].setFont(atributo.getTextoH2());
+        gbc.insets=new Insets(10,15,30,15);
+        pnlSecundario.add(cabecalho[1],gbc);
+        gbc.gridwidth = 4;
+
+        gbc.gridx=0;
+        gbc.insets=new Insets(10,30,0,10);
+
+        for(int i=1; i<5; i++){
+
+
+            gbc.gridy = 3+2*i;
+            gbc.ipady = 5;
+
+            pnlSecundario.add(lblDosagem[i],gbc);
+            gbc.gridy =2*i+4;
+            gbc.ipady = 10;
+            pnlSecundario.add(txtDosagem[i],gbc);
+
+
+
+        }
+        gbc.gridy = 13;
+        gbc.ipady = 5;
+        pnlSecundario.add(lblDosagem[5],gbc);
+        gbc.ipady = 10;
+        gbc.gridy = 14;
+        pnlSecundario.add(txtDosagem[5],gbc);
+        gbc.weighty=1;
+        gbc.weightx=1;
+        gbc.gridy=15;
+        gbc.gridheight=GridBagConstraints.REMAINDER;
+        gbc.ipady = 10;
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+
+        pnlSecundario.add(btnPrevious,gbc);
 
 
 
@@ -227,6 +293,8 @@ public class MedicamentoView extends JPanel implements ActionListener {
 
 
     }
+
+
     public static void main(String[]args){
         JFrame tela = new JFrame();
         tela.add(new MedicamentoView());
@@ -237,12 +305,12 @@ public class MedicamentoView extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getSource().toString()){
-            case"Adicionar":
-                break;
-            case "Cancelar":
-                System.out.println("hey");
-                break;
+        if(e.getSource() == btnNext){
+                cl.next(this);
+
+        }
+        else if(e.getSource()==btnPrevious){
+            cl.previous(this);
         }
 
     }
