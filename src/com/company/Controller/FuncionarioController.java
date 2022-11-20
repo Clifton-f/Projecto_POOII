@@ -11,13 +11,17 @@ public class FuncionarioController {
     Conexao conexao = new Conexao();
     String [][]lista;
 
-    public boolean login(String email, String password){
-        String []valores = {email,password};
-        String []atributos = {"email", "password"};
+    public boolean login(String email, String password) {
+        String[] valores = {email, password};
+        String[] atributos = {"email", "password"};
 
-        conexao.consultaFuncionario(atributos,valores);
+        funcionario = conexao.consultaFuncionario(atributos, valores);
 
-    return true;
+        if (funcionario == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
     public boolean addFuncionario(String nome, String apelido, Timestamp dataNascimento,String contacto, String email,
                                   String password){
@@ -80,8 +84,9 @@ public class FuncionarioController {
             return pegarElemento(id,iterador+1);
         }
     }
-    public boolean actualizar(String idFuncionario, String nome, String apelido, Timestamp data,String email, String contacto,
-            String password,String []clnActualizadas){
+
+    public boolean actualizar(String idFuncionario, String nome, String apelido, Timestamp data,String email,
+                              String contacto, String password,String []clnActualizadas){
         boolean sucesso = false;
         ArrayList<ArrayList<String>> lstParametros = new ArrayList<>();
         //ArrayList<String> parametrosQuery

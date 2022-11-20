@@ -313,9 +313,10 @@ public class Conexao {
                 e.printStackTrace();
                 return false;
             }
-        } else if (tabela instanceof Medicamento) {
+        }
+        else if (tabela instanceof Medicamento) {
             query = "INSERT INTO `medicamento`(`batchNo`, `nome_comercial`, `nome_genérico`, `validade`," +
-                    " `preco_compra`, `preco_venda`, `classificacao`, `contacto`, `descricao`,`stock´) VALUES (" + tabela + ");";
+                    " `preco_compra`, `preco_venda`, `classificacao`, `contacto_fornecedor`, `descricao`,`quantidade`) VALUES (" + tabela + ");";
             try {
                 statement.executeUpdate(query);
 
@@ -335,7 +336,9 @@ public class Conexao {
                 return false;
             }
 
-        } else if (tabela instanceof Venda) {
+        }
+
+        else if (tabela instanceof Venda) {
             query = "INSERT INTO `venda`(`idVenda`, `data`, `valor_total`, `desconto`, `valor_pago`) VALUES (" + tabela + ");";
             try {
                 statement.executeUpdate(query);
@@ -355,7 +358,9 @@ public class Conexao {
                 e.printStackTrace();
                 return false;
             }
-        } else if (tabela instanceof Funcionario) {
+        }
+
+        else if (tabela instanceof Funcionario) {
             query = "INSERT INTO `funcionario`(`apelido`, `pNome`, `data_nascimento`, `contacto`, `idFuncionario`, `email`)" +
                     " VALUES (" + tabela + ");";
             try {
@@ -373,6 +378,55 @@ public class Conexao {
 
 
 
+        }
+
+        else if (tabela instanceof Ingrediente){
+            query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES (" +
+                    tabela+")";
+            try {
+                statement.executeUpdate(query);
+
+                connection.close();
+                return true;
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+
+            }
+        }
+
+        else if (tabela instanceof Item){
+            query = "INSERT INTO `vendamedicamento`(`batchNo`, `idVenda`, `quantidade`) VALUES ("+tabela+")";
+            try {
+                statement.executeUpdate(query);
+
+                connection.close();
+                return true;
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+
+            }
+        }
+
+        else if(tabela instanceof Ingrediente){
+            query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES ("+tabela+")";
+            try {
+                statement.executeUpdate(query);
+
+                connection.close();
+                return true;
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+
+            }
         }
         return false;
     }
@@ -418,11 +472,9 @@ public class Conexao {
         String []valores = {email,password};
         String []atributos = {"email", "password"};
 
-        Fornecedor fornecedor = new Fornecedor("843456789","Brotherhood of Steel","Mojave Wasteland, Hidden Bunker","ifo@bos.com");
-        if (conexao.inserir(fornecedor)){
-            System.out.println("fornecedor itroduzido");
-        }
-        Medicamento medicamento = new Medicamento("B2123","Paracetamol Genérico","Paracetamol",Timestamp.valueOf("2024-10-01"),
+
+        Medicamento medicamento = new Medicamento("B2123","Paracetamol Genérico","Paracetamol",
+                Timestamp.valueOf("2024-10-01 00:00:00"),
                 1000,10,"Antibióticos","843456789","",1100);
         if (conexao.inserir(medicamento)){
             System.out.println("Medicamento introduzido");
@@ -430,6 +482,8 @@ public class Conexao {
         //Funcionario funcionario = new Funcionario("Salow","Edward",Timestamp.valueOf("2226-01-01"),"875461243",);
 
         Venda venda = new Venda();
+        Timestamp data = Timestamp.valueOf("2024-10-01 00:00:00");
+        System.out.println(data.toString());
 
 
 

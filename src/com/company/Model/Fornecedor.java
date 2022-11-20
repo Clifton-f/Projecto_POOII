@@ -58,4 +58,20 @@ public class Fornecedor {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String[][] toArray(){
+        String [][]array = new String[7][2];
+
+        array[0][0] = "contacto";
+        array[1][0] = "nome";
+        array[2][0] = "email";
+        array[3][0] = "endereco";
+
+
+        array[0][1] = this.contacto;
+        array[1][1] = this.nome;
+        array[2][1] = this.email;
+        array[3][1] = this.endereco;
+
+        return array;
+    }
 }

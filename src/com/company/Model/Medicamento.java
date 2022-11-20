@@ -8,7 +8,7 @@ public class Medicamento {
     private String nome_comercial;
     private String nome_generico;
     private Timestamp validade;
-    private int stock;
+    private int quatidade;
     private int preco_compra;
     private int preco_venda;
     private String classificacao;
@@ -17,7 +17,7 @@ public class Medicamento {
     private String tabela = "medicamento";
 
     public Medicamento(String batchNo, String nome_comercial, String nome_generico, Timestamp validade, int preco_compra,
-                       int preco_venda, String classificacao, String contacto, String descricao, int stock) {
+                       int preco_venda, String classificacao, String contacto, String descricao, int quantidade) {
         this.batchNo = batchNo;
         this.nome_comercial = nome_comercial;
         this.nome_generico = nome_generico;
@@ -27,7 +27,7 @@ public class Medicamento {
         this.classificacao = classificacao;
         this.contacto = contacto;
         this.descricao = descricao;
-        this.stock = stock;
+        this.quatidade = quantidade;
     }
 
     ArrayList<Ingrediente> ingredientes = new ArrayList<>();
@@ -44,7 +44,7 @@ public class Medicamento {
         return batchNo;
     }
 
-    public void setBatchNo(String batchNo) {
+    /*public void setBatchNo(String batchNo) {
         this.batchNo = batchNo;
     }
 
@@ -112,24 +112,30 @@ public class Medicamento {
         this.contacto = contacto;
     }
 
-    /*public Medicamento(String batchNo, String nome_comercial,String nome_generico, Timestamp validade, int quantidade, int preco_compra, int preco_venda) {
-        this.batchNo = batchNo;
-        this.nome_comercial = nome_comercial;
-        this.nome_generico = nome_generico;
-        this.validade = validade;
-        this.stock = quantidade;
-        this.preco_compra = preco_compra;
-        this.preco_venda = preco_venda;
-
-
-    }*/
-
     public String getDescricao() {
         return descricao;
     }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }*/
+
+    public String[][] toArray(){
+        String [][]array = new String[7][2];
+
+        array[0][0] = "batch No.";
+        array[1][0] = "Nome comercial";
+        array[2][0] = "Nome Genérico";
+        array[3][0] = "validade";
+        array[4][0] = "fornecedor";
+
+
+        array[0][1] = this.batchNo;
+        array[1][1] = this.nome_comercial;
+        array[2][1] = this.nome_generico;
+        array[3][1] = String.valueOf(this.validade);
+
+        return array;
     }
 
     @Override
@@ -143,6 +149,7 @@ public class Medicamento {
                 "', '" + classificacao +
                 "', '" + contacto +
                 "', '" + descricao +
-                "', '" + stock +"'";
+                "', '" + quatidade +"'";
     }
+
 }
