@@ -60,6 +60,45 @@ public class Conexao {
 
     }
 
+    public ArrayList<Object> consultalista(Object tabela){
+        String query = "SELECT * FROM ";
+        if (tabela instanceof Venda) {
+            query += "venda " + ";";
+        } else if (tabela instanceof Medicamento) {
+            query += "medicamento " + ";";
+        } else if (tabela instanceof Fornecedor) {
+            query += "fornecedor " + ";";
+        } else if (tabela instanceof Funcionario) {
+            query += "funcionario " + ";";
+        } else if (tabela instanceof Item) {
+            query += "vendamedicamento " + ";";
+        } else if (tabela instanceof Ingrediente) {
+            query += "ingredientemedicamento " + ";";
+        }
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultados;
+
+    }
+
+    /*public ArrayList<Funcionario> consultalista(Funcionario tabela){
+        String query = "SELECT * FROM funcionario";
+
+            try {
+
+                resultSet = statement.executeQuery(query);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return resultados;
+
+        }*/
+
     public Venda consultaVenda(String[] atributos, String[] valores) {
         String query = "SELECT * FROM venda ";
         Venda venda = new Venda();
@@ -80,6 +119,7 @@ public class Conexao {
         }
         return venda;
     }
+
     public Medicamento consultaMedicamento(String[] atributos, String[] valores) {
         String query = "SELECT * FROM medicamento ";
         Medicamento medicamento =null;
@@ -133,9 +173,10 @@ public class Conexao {
             resultSet = statement.executeQuery(query);
             resultSet.next();
             funcionario = new Funcionario(resultSet.getString(3), resultSet.getString(2),
-                    resultSet.getDate(4), resultSet.getString(6)
-                    , resultSet.getInt(1), resultSet.getString(5),
+                    resultSet.getTimestamp(4), resultSet.getString(6)
+                    , resultSet.getString(5),
                     resultSet.getString(7));
+            funcionario.setIdFuncionaro(resultSet.getInt(1));
 
 
         } catch (SQLException e) {
@@ -167,7 +208,7 @@ public class Conexao {
         StringBuilder parametros;
 
 
-        parametros = new StringBuilder("WHERE " + atributos[0] + " = '" + valores[0] + "'");
+        parametros = new StringBuilder(" WHERE " + atributos[0] + " = '" + valores[0] + "'");
         for (int i = 1; i < atributos.length; i++) {
             parametros.append("\n AND ").append(atributos[i]).append(" = '").append(valores[i]).append( "'");
 
@@ -175,6 +216,7 @@ public class Conexao {
         }
         return parametros.toString();
     }
+
 
     /**public ArrayList<Object> consultaLike(Object tabela, String []atributos, String []valores){
 
@@ -258,75 +300,115 @@ public class Conexao {
 
 
     }*/
-    public void insercao(Object tabela){
+    public boolean inserir(Object tabela) {
         String query;
-        if (tabela instanceof Fornecedor){
+        if (tabela instanceof Fornecedor) {
             try {
-                query ="INSERT INTO `fornecedor` (`contacto`, `nome`, `email`, `endereco`) VALUES ("+tabela+");";
+                query = "INSERT INTO `fornecedor` (`contacto`, `nome`, `email`, `endereco`) VALUES (" + tabela + ");";
                 statement.executeUpdate(query);
+                return true;
 
 
             } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
             }
-        }
-        else if(tabela instanceof Medicamento){
-            query ="INSERT INTO `medicamento`(`batchNo`, `nome_comercial`, `nome_genérico`, `validade`," +
-                    " `preco_compra`, `preco_venda`, `classificacao`, `contacto`, `descricao`,`stock´) VALUES ("+tabela+");";
+        } else if (tabela instanceof Medicamento) {
+            query = "INSERT INTO `medicamento`(`batchNo`, `nome_comercial`, `nome_genérico`, `validade`," +
+                    " `preco_compra`, `preco_venda`, `classificacao`, `contacto`, `descricao`,`stock´) VALUES (" + tabela + ");";
             try {
                 statement.executeUpdate(query);
 
-                for(int i = 0; i<((Medicamento) tabela).getIngredientes().size();i++){
+                for (int i = 0; i < ((Medicamento) tabela).getIngredientes().size(); i++) {
 
                     query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES ('"
-                            +((Medicamento) tabela).getBatchNo()+"',"+((Medicamento) tabela).getIngredientes().get(i)+");";
+                            + ((Medicamento) tabela).getBatchNo() + "'," + ((Medicamento) tabela).getIngredientes().get(i) + ");";
                     statement.executeUpdate(query);
 
                 }
+                connection.close();
+                return true;
 
 
-            }catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
             }
 
-        }
-        else if(tabela instanceof Venda) {
+        } else if (tabela instanceof Venda) {
             query = "INSERT INTO `venda`(`idVenda`, `data`, `valor_total`, `desconto`, `valor_pago`) VALUES (" + tabela + ");";
             try {
                 statement.executeUpdate(query);
-                for (int i=0; i< ((Venda) tabela).getItens().size();i++){
+                for (int i = 0; i < ((Venda) tabela).getItens().size(); i++) {
 
-                    query="INSERT INTO `vendamedicamento`(`batchNo`, `idVenda`, `quantidade`) VALUES ("
-                            + ((Venda) tabela).getIdVenda()+((Venda) tabela).getItens().get(i).toString()+")";
+                    query = "INSERT INTO `vendamedicamento`(`batchNo`, `idVenda`, `quantidade`) VALUES ("
+                            + ((Venda) tabela).getIdVenda() + ((Venda) tabela).getItens().get(i).toString() + ")";
                     statement.executeUpdate(query);
 
 
                 }
+                connection.close();
+                return true;
 
 
             } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
             }
-        }
-        else if(tabela instanceof Funcionario) {
+        } else if (tabela instanceof Funcionario) {
             query = "INSERT INTO `funcionario`(`apelido`, `pNome`, `data_nascimento`, `contacto`, `idFuncionario`, `email`)" +
                     " VALUES (" + tabela + ");";
             try {
                 statement.executeUpdate(query);
 
+                connection.close();
+                return true;
+
 
             } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
+
             }
+
+
+
         }
+        return false;
+    }
 
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+    public boolean actualizar(Object tabela, String []clnAlteradas, String []novosVlrs,
+                              String []clnIdetificacao, String []vlrIdentificacao) {
+        boolean sucesso = false;
+        StringBuilder query = new StringBuilder("UPDATE `");
+        if (tabela instanceof Funcionario){
+            query.append("funcionario");
+
+        }else if(tabela instanceof Fornecedor){
+            query.append("fornecedor");
+
+        }else if(tabela instanceof Medicamento){
+            query.append("medicamento");
+
         }
+        else if(tabela instanceof VendaMedicamento){
+            query.append("vendamedicamento");
+        }
+        else if(tabela instanceof Venda){
+            query.append("venda");
+        }
+        else if(tabela instanceof Ingrediente){
+            query.append("ingredientemedicamento");
+        }
+        query.append("` SET `"+clnAlteradas[0]+"` = "+novosVlrs[0]);
+        for(int i = 1; i<clnAlteradas.length;i++){
+            query.append(" , `"+clnAlteradas[i]+"` = "+ novosVlrs[i]);
 
+        }
+        query.append(buildQuery(clnIdetificacao,vlrIdentificacao));
 
+        return sucesso;
     }
 
     public static void main(String []args){
@@ -336,8 +418,26 @@ public class Conexao {
         String []valores = {email,password};
         String []atributos = {"email", "password"};
 
+        Fornecedor fornecedor = new Fornecedor("843456789","Brotherhood of Steel","Mojave Wasteland, Hidden Bunker","ifo@bos.com");
+        if (conexao.inserir(fornecedor)){
+            System.out.println("fornecedor itroduzido");
+        }
+        Medicamento medicamento = new Medicamento("B2123","Paracetamol Genérico","Paracetamol",Timestamp.valueOf("2024-10-01"),
+                1000,10,"Antibióticos","843456789","",1100);
+        if (conexao.inserir(medicamento)){
+            System.out.println("Medicamento introduzido");
+        }
+        //Funcionario funcionario = new Funcionario("Salow","Edward",Timestamp.valueOf("2226-01-01"),"875461243",);
+
+        Venda venda = new Venda();
+
+
+
 
 
 
     }
+
+
+
 }

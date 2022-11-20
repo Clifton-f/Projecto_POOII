@@ -14,7 +14,6 @@ public class Tela implements ActionListener{
     Login pnlLogin = new Login();
     FornecedorView pnlFornecedor = new FornecedorView();
     FuncionarioView pnlFuncionario = new FuncionarioView();
-    FornecedorController fornecedorController = new FornecedorController();
     FuncionarioController funcionarioController = new FuncionarioController();
 
 
@@ -71,6 +70,7 @@ public class Tela implements ActionListener{
         this.tela.setSize(new Dimension(1280,720));
         this.tela.setVisible(true);
         this.tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
 

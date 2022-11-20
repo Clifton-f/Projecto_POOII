@@ -3,6 +3,7 @@ package com.company.Model;
 public class VendaMedicamento {
     private String idVenda;
     private int quantidade;
+    private String tabela = "vendaMedicamento";
 
     public VendaMedicamento(String batchNo, String idVenda, int quantidade) {
         this.idVenda = idVenda;

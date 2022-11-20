@@ -4,6 +4,7 @@ public class Ingrediente {
     private String batchNo;
     private String nome;
     private int quantidade;
+    private String tabela = "ingrediente";
 
     public String getBatchNo() {
         return batchNo;

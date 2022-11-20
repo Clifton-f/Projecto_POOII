@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class VendaView extends JPanel implements ActionListener {
     JLabel []cabecalho= new JLabel[2];
     JLabel [] lblProduto = new JLabel[7];
-    JTextField []txtMedicamento = new JTextField[7];
+    JTextField [] txtProduto = new JTextField[7];
     ArrayList<Object> elemento = new ArrayList<Object>();
     JLabel lblCompra;
     JLabel lblDadosPh[] = new JLabel[4];
@@ -19,8 +19,8 @@ public class VendaView extends JPanel implements ActionListener {
     JButton btnAdd;
     JButton btnrmv;
     JButton Submeter;
-    JTextField []txtRecibo;
-    JLabel []lblRecibo;
+    JTextField []txtRecibo = new JTextField[3];
+    JLabel []lblRecibo = new JLabel[3];
     CustomizarView atributo = new CustomizarView();
     public VendaView(){
 
@@ -54,9 +54,9 @@ public class VendaView extends JPanel implements ActionListener {
 
         for (int i = 0; i<7;i++){
             lblProduto[i].setFont(atributo.getTextoCorpo());
-            txtMedicamento[i] = new JTextField();
-            txtMedicamento[i].setPreferredSize(new Dimension(200,31));
-            txtMedicamento[i].setFont(atributo.getTextoCorpo());
+            txtProduto[i] = new JTextField();
+            txtProduto[i].setPreferredSize(new Dimension(200,31));
+            txtProduto[i].setFont(atributo.getTextoCorpo());
 
         }
         //cabecalho
@@ -146,7 +146,7 @@ public class VendaView extends JPanel implements ActionListener {
             this.add(lblProduto[i],gbc);
             gbc.gridy=10;
             gbc.gridx =i;
-            this.add(txtMedicamento[i],gbc);
+            this.add(txtProduto[i],gbc);
         }
         gbc.gridy =9;
         gbc.gridx = 6;
@@ -154,24 +154,62 @@ public class VendaView extends JPanel implements ActionListener {
         gbc.gridy = 10;
         gbc.gridx = 6;
         gbc.weightx=1;
-        this.add(txtMedicamento[6],gbc);
+        this.add(txtProduto[6],gbc);
+
+
+
 
         /**Botões*/
         gbc.weighty = 1;
-        gbc.gridx = 5;
-        gbc.gridy = 11;
-        gbc.gridheight = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.NONE;
-        this.add(btnAdd,gbc);
-
         gbc.gridx = 6;
         gbc.gridy = 11;
+        gbc.gridwidth = 1;
+        JPanel pnlBtn  = new JPanel();
+        GridLayout gl = new GridLayout(1,2);
+        pnlBtn.setLayout(gl);
+        gl.setHgap(15);
+        pnlBtn.add(btnAdd);
+        pnlBtn.add(btnrmv);
+        gbc.anchor = GridBagConstraints.FIRST_LINE_END;
+        //gbc.gridheight = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.NONE;
-        this.add(btnrmv,gbc);
+        this.add(pnlBtn,gbc);
+
+        lblRecibo[0] = new JLabel("Sub Total");
+        lblRecibo[1] = new JLabel("Desconto");
+        lblRecibo[2] = new JLabel("Preço Total");
+        for(int i = 0;i<3; i++){
+            txtRecibo[i] = new JTextField();
+            txtRecibo[i].setFont(atributo.getTextoCorpo());
+        }
+        gbc.weighty=0;
+
+        gbc.fill = GridBagConstraints.BOTH;
+        for(int i = 0; i<txtRecibo.length; i++){
+            gbc.gridy=GridBagConstraints.LAST_LINE_END-i;
+            gbc.gridx = 4;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1;
+            this.add(txtRecibo[txtRecibo.length-i-1],gbc);
+            gbc.gridwidth=1;
+            gbc.gridx = 3;
+            this.add(lblRecibo[lblRecibo.length-1-i],gbc);
+        }
+
+
+
+
 
 
 
     }
+    public float precoTotal(int precoUnitario, float desconto){
+        int precoTotal = 0;
+
+        return precoTotal;
+    }
+
     public static void main(String[]args){
         JFrame tela = new JFrame("Compra");
         tela.add(new VendaView());

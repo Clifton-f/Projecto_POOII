@@ -1,5 +1,6 @@
 package com.company.Controller;
 
+import com.company.Model.Conexao;
 import com.company.Model.Fornecedor;
 
 import java.sql.*;
@@ -10,6 +11,7 @@ public class FornecedorController {
     Connection connection;
     Statement statement;
     ResultSet resultados;
+    private Conexao bd = new Conexao();
 
     public FornecedorController(){
         try {
@@ -33,6 +35,13 @@ public class FornecedorController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public String addFornecedor(String contacto, String nome, String email, String endereco){
+        Fornecedor novoFrnecedor = new Fornecedor(contacto,nome,endereco,email);
+        bd.inserir(novoFrnecedor);
+
+
+        return "";
     }
     public void introduzir(String contacto, String nome, String email,String endereco){
 

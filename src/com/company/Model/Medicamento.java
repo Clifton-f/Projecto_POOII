@@ -14,6 +14,7 @@ public class Medicamento {
     private String classificacao;
     private String contacto;
     private String descricao;
+    private String tabela = "medicamento";
 
     public Medicamento(String batchNo, String nome_comercial, String nome_generico, Timestamp validade, int preco_compra,
                        int preco_venda, String classificacao, String contacto, String descricao, int stock) {

@@ -5,7 +5,11 @@ public class Fornecedor {
     private String nome;
     private String endereco;
     private String email;
+    private String tabela = "fronecedor";
 
+    public String getTabela() {
+        return tabela;
+    }
 
     public Fornecedor(String contacto, String nome, String endereco, String email) {
         this.contacto = contacto;
