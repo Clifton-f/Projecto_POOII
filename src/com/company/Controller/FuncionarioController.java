@@ -7,9 +7,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class FuncionarioController {
-    Funcionario funcionario;
-    Conexao conexao = new Conexao();
-    String [][]lista;
+    private Funcionario funcionario;
+    private Conexao conexao = new Conexao();
+    private String [][]lista;
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
 
     public boolean login(String email, String password) {
         String[] valores = {email, password};
@@ -135,7 +139,9 @@ public class FuncionarioController {
     public static void main(String []args){
 
         FuncionarioController fc = new FuncionarioController();
-        fc.login("vulpesfumentari@legion.com","caesarrules");
+        boolean verdade = fc.login("admin","admin");
+        System.out.println(fc.funcionario);
+        System.out.println(verdade);
 
 
 

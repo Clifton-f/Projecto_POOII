@@ -59,7 +59,7 @@ public class Fornecedor {
         this.email = email;
     }
     public String[][] toArray(){
-        String [][]array = new String[7][2];
+        String [][]array = new String[4][2];
 
         array[0][0] = "contacto";
         array[1][0] = "nome";

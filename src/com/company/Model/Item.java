@@ -17,4 +17,20 @@ public class Item {
                 ", '" + idVenda +
                 "', '" + quantidade+ "'";
     }
+    public String[][] toArray(){
+        String [][]array = new String[3][2];
+
+        array[0][0] = "batchNo";
+        array[1][0] = "idVenda";
+        array[2][0] = "quantidade";
+
+
+
+        array[0][1] = this.batchNo;
+        array[1][1] = this.idVenda;
+        array[2][1] = String.valueOf(this.quantidade);
+
+
+        return array;
+    }
 }

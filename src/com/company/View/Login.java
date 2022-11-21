@@ -2,15 +2,13 @@ package com.company.View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Login  extends JPanel{
     JButton btnLogin = new JButton("Entrar");
     JButton btnRegistar = new JButton("Registar");
-    JTextField txtUsername = new JTextField("Nome de usuário");
+    JTextField txtEmail = new JTextField("admin");
     
-    JPasswordField password = new JPasswordField("*************");
+    JPasswordField password = new JPasswordField("admin");
     CustomizarView propriedades = new CustomizarView();
 
     public Login(){
@@ -21,7 +19,7 @@ public class Login  extends JPanel{
         btnRegistar.setBackground(propriedades.getBotaoPCor());
         btnRegistar.setFont(propriedades.getTextoCorpo());
         btnRegistar.setActionCommand("Registar");
-        txtUsername.setFont(propriedades.getTextoCorpo());
+        txtEmail.setFont(propriedades.getTextoCorpo());
         password.setFont(propriedades.getTextoCorpo());
 
         this.setBackground(propriedades.getPainelCor());
@@ -39,7 +37,7 @@ public class Login  extends JPanel{
         gbc.fill=GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5,200,5,200);
         gbc.ipady = 10;
-        add(txtUsername,gbc);
+        add(txtEmail,gbc);
 
         gbc.gridy = 1;
         add(password,gbc);

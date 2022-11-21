@@ -1,6 +1,5 @@
 package com.company.View;
 
-import com.company.Controller.FornecedorController;
 import com.company.Controller.FuncionarioController;
 
 import javax.swing.*;
@@ -55,12 +54,15 @@ public class Tela implements ActionListener{
 
 
         pnlWorkspc.add(pnlCentro, BorderLayout.CENTER);
+        pnlWorkspc.add(pnlMenu.menuBar, BorderLayout.SOUTH);
 
 
         pnlTela.setLayout(lyTela);
         pnlTela.add("login",pnlLogin);
         pnlTela.add("workspace",pnlWorkspc);
+
         this.tela.add(pnlTela);
+
         pnlLogin.btnRegistar.addActionListener(this);
 
 
@@ -70,6 +72,7 @@ public class Tela implements ActionListener{
         this.tela.setSize(new Dimension(1280,720));
         this.tela.setVisible(true);
         this.tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
     }
 
@@ -88,10 +91,15 @@ public class Tela implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == pnlLogin.btnLogin){
-            if (funcionarioController.login(pnlLogin.txtUsername.getText(),new String(pnlLogin.password.getPassword()))){
-                lyTela.show(pnlTela,"workspace");
+            boolean login;
 
+            if (funcionarioController.login(pnlLogin.txtEmail.getText(), String.valueOf(pnlLogin.password.getPassword()))){
+                lyTela.show(pnlTela,"workspace");
+                System.out.println(funcionarioController.getFuncionario());
+            }else{
+                System.out.println("erro");
             }
+
 
         }else if(e.getSource() == pnlLogin.btnRegistar){
             System.out.println("placeholder");

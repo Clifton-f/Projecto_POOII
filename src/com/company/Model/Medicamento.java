@@ -12,7 +12,7 @@ public class Medicamento {
     private int preco_compra;
     private int preco_venda;
     private String classificacao;
-    private String contacto;
+    private String contactoFornecedor;
     private String descricao;
     private String tabela = "medicamento";
 
@@ -25,7 +25,7 @@ public class Medicamento {
         this.preco_compra = preco_compra;
         this.preco_venda = preco_venda;
         this.classificacao = classificacao;
-        this.contacto = contacto;
+        this.contactoFornecedor = contacto;
         this.descricao = descricao;
         this.quatidade = quantidade;
     }
@@ -121,19 +121,30 @@ public class Medicamento {
     }*/
 
     public String[][] toArray(){
-        String [][]array = new String[7][2];
+        String [][]array = new String[10][2];
 
         array[0][0] = "batch No.";
         array[1][0] = "Nome comercial";
         array[2][0] = "Nome Genérico";
         array[3][0] = "validade";
-        array[4][0] = "fornecedor";
+        array[4][0] = "preco de compra";
+        array[5][0] = "preco de venda";
+        array[6][0] = "classificacao";
+        array[7][1] = "contacto do fornecedor";
+        array[8][1] = "descricao";
+        array[9][1] = "quantidade";
 
 
         array[0][1] = this.batchNo;
         array[1][1] = this.nome_comercial;
         array[2][1] = this.nome_generico;
         array[3][1] = String.valueOf(this.validade);
+        array[4][1] = String.valueOf(preco_compra);
+        array[5][1] = String.valueOf(preco_venda);
+        array[6][1] = classificacao;
+        array[7][1] = contactoFornecedor;
+        array[8][1] = descricao;
+        array[9][1] = String.valueOf(quatidade);
 
         return array;
     }
@@ -147,7 +158,7 @@ public class Medicamento {
                 "', '" + preco_compra +
                 "', '" + preco_venda +
                 "', '" + classificacao +
-                "', '" + contacto +
+                "', '" + contactoFornecedor +
                 "', '" + descricao +
                 "', '" + quatidade +"'";
     }

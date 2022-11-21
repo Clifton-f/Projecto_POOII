@@ -11,7 +11,8 @@ public class MenuView {
     JLabel lblLogo = new JLabel();
     CustomizarView atributos = new CustomizarView();
     JPanel sidemenu = new JPanel();
-    JPanel TopBar = new JPanel();
+    JPanel topBar = new JPanel();
+    JMenuBar menuBar;
 
     public MenuView()
     {
@@ -37,6 +38,21 @@ public class MenuView {
         }
 
         sidemenu.setLayout (new BoxLayout(sidemenu, BoxLayout.PAGE_AXIS));
+
+        topBar.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        /*Object[] listaTopbar = new Object[4];
+        listaTopbar[1] = new JLabel();*/
+        menuBar = new JMenuBar();
+        JMenu linha = new JMenu();
+        JMenuItem []menuItems = new JMenuItem[2];
+        menuItems[0] = new JMenuItem("Perfil");
+        menuItems[1] = new JMenuItem("Logout");
+        linha.add(menuItems[0]);
+        linha.add(menuItems[1]);
+        menuBar.add(linha);
+        topBar.add(menuBar);
 
     }
 }

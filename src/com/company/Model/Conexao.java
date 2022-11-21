@@ -23,6 +23,20 @@ public class Conexao {
         }
     }
 
+    public String buildQuery(String []atributos, String []valores) {
+        StringBuilder parametros;
+
+
+        parametros = new StringBuilder(" WHERE " + atributos[0] + " = '" + valores[0] + "'");
+        for (int i = 1; i < atributos.length; i++) {
+            parametros.append("\n AND ").append(atributos[i]).append(" = '").append(valores[i]).append( "'");
+
+
+        }
+        return parametros.toString();
+    }
+
+
     public ArrayList<Object> consultalista(Object tabela, String[] atributos, String[] valores) {
 
         StringBuilder parametros;
@@ -108,10 +122,19 @@ public class Conexao {
 
         try {
 
+
             resultSet = statement.executeQuery(query);
-            resultSet.next();
-            venda = new Venda(resultSet.getInt(1),resultSet.getTimestamp(2),
-                    resultSet.getInt(3),resultSet.getFloat(4),resultSet.getInt(5));
+
+            if (resultSet.next()==false){
+                return null;
+            }else {
+
+                venda = new Venda(resultSet.getTimestamp(2),
+                        resultSet.getInt(3),resultSet.getFloat(4),resultSet.getInt(5));
+                venda.setIdVenda(resultSet.getInt(1));
+
+            }
+
 
 
         } catch (SQLException e) {
@@ -129,11 +152,18 @@ public class Conexao {
 
         try {
 
+
             resultSet = statement.executeQuery(query);
-            resultSet.next();
-            medicamento = new Medicamento(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getTimestamp(4),
-                    resultSet.getInt(5),resultSet.getInt(6),resultSet.getString(7),
-                    resultSet.getString(8),resultSet.getString(9),resultSet.getInt(10));
+            if (resultSet.next()==false){
+                return null;
+            }else {
+
+                medicamento = new Medicamento(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getTimestamp(4),
+                        resultSet.getInt(5),resultSet.getInt(6),resultSet.getString(7),
+                        resultSet.getString(8),resultSet.getString(9),resultSet.getInt(10));
+            }
+
+
 
 
         } catch (SQLException e) {
@@ -151,9 +181,13 @@ public class Conexao {
         try {
 
             resultSet = statement.executeQuery(query);
-            resultSet.next();
-            fornecedor = new Fornecedor(resultSet.getString(1),resultSet.getString(2),resultSet.getString(4),
-                    resultSet.getString(3));
+            if (resultSet.next()==false){
+                return null;
+            }else {
+                fornecedor = new Fornecedor(resultSet.getString(1),resultSet.getString(2),resultSet.getString(4),
+                        resultSet.getString(3));
+            }
+
 
 
         } catch (SQLException e) {
@@ -171,12 +205,22 @@ public class Conexao {
         try {
 
             resultSet = statement.executeQuery(query);
-            resultSet.next();
-            funcionario = new Funcionario(resultSet.getString(3), resultSet.getString(2),
-                    resultSet.getTimestamp(4), resultSet.getString(6)
-                    , resultSet.getString(5),
-                    resultSet.getString(7));
-            funcionario.setIdFuncionaro(resultSet.getInt(1));
+            //resultSet.next();
+
+            if(resultSet.next() == false){
+                return null;
+            }else {
+
+
+                funcionario = new Funcionario(resultSet.getString(3)
+                        , resultSet.getString(2),
+                        resultSet.getTimestamp(4),
+                        resultSet.getString(6)
+                        , resultSet.getString(5),
+                        resultSet.getString(7));
+                funcionario.setIdFuncionaro(resultSet.getInt(1));
+            }
+
 
 
         } catch (SQLException e) {
@@ -194,8 +238,15 @@ public class Conexao {
         try {
 
             resultSet = statement.executeQuery(query);
-            resultSet.next();
-            ingrediente = new Ingrediente(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3));
+
+            if(resultSet.next() == false){
+                return null;
+            }else {
+                ingrediente = new Ingrediente(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3));
+
+
+            }
+
 
 
         } catch (SQLException e) {
@@ -204,18 +255,7 @@ public class Conexao {
         return ingrediente;
     }
 
-    public String buildQuery(String []atributos, String []valores) {
-        StringBuilder parametros;
 
-
-        parametros = new StringBuilder(" WHERE " + atributos[0] + " = '" + valores[0] + "'");
-        for (int i = 1; i < atributos.length; i++) {
-            parametros.append("\n AND ").append(atributos[i]).append(" = '").append(valores[i]).append( "'");
-
-
-        }
-        return parametros.toString();
-    }
 
 
     /**public ArrayList<Object> consultaLike(Object tabela, String []atributos, String []valores){
@@ -301,80 +341,26 @@ public class Conexao {
 
     }*/
     public boolean inserir(Object tabela) {
-        String query;
+        String query = "";
         if (tabela instanceof Fornecedor) {
-            try {
-                query = "INSERT INTO `fornecedor` (`contacto`, `nome`, `email`, `endereco`) VALUES (" + tabela + ");";
-                statement.executeUpdate(query);
-                return true;
+            query = "INSERT INTO `fornecedor` (`contacto`, `nome`, `email`, `endereco`) VALUES (" + tabela + ");";
 
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
         }
         else if (tabela instanceof Medicamento) {
             query = "INSERT INTO `medicamento`(`batchNo`, `nome_comercial`, `nome_genérico`, `validade`," +
                     " `preco_compra`, `preco_venda`, `classificacao`, `contacto_fornecedor`, `descricao`,`quantidade`) VALUES (" + tabela + ");";
-            try {
-                statement.executeUpdate(query);
 
-                for (int i = 0; i < ((Medicamento) tabela).getIngredientes().size(); i++) {
-
-                    query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES ('"
-                            + ((Medicamento) tabela).getBatchNo() + "'," + ((Medicamento) tabela).getIngredientes().get(i) + ");";
-                    statement.executeUpdate(query);
-
-                }
-                connection.close();
-                return true;
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
 
         }
 
         else if (tabela instanceof Venda) {
             query = "INSERT INTO `venda`(`idVenda`, `data`, `valor_total`, `desconto`, `valor_pago`) VALUES (" + tabela + ");";
-            try {
-                statement.executeUpdate(query);
-                for (int i = 0; i < ((Venda) tabela).getItens().size(); i++) {
 
-                    query = "INSERT INTO `vendamedicamento`(`batchNo`, `idVenda`, `quantidade`) VALUES ("
-                            + ((Venda) tabela).getIdVenda() + ((Venda) tabela).getItens().get(i).toString() + ")";
-                    statement.executeUpdate(query);
-
-
-                }
-                connection.close();
-                return true;
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
         }
 
         else if (tabela instanceof Funcionario) {
             query = "INSERT INTO `funcionario`(`apelido`, `pNome`, `data_nascimento`, `contacto`, `idFuncionario`, `email`)" +
                     " VALUES (" + tabela + ");";
-            try {
-                statement.executeUpdate(query);
-
-                connection.close();
-                return true;
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-
-            }
 
 
 
@@ -383,52 +369,31 @@ public class Conexao {
         else if (tabela instanceof Ingrediente){
             query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES (" +
                     tabela+")";
-            try {
-                statement.executeUpdate(query);
 
-                connection.close();
-                return true;
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-
-            }
         }
 
         else if (tabela instanceof Item){
             query = "INSERT INTO `vendamedicamento`(`batchNo`, `idVenda`, `quantidade`) VALUES ("+tabela+")";
-            try {
-                statement.executeUpdate(query);
 
-                connection.close();
-                return true;
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-
-            }
         }
 
         else if(tabela instanceof Ingrediente){
             query = "INSERT INTO `ingredientemedicamento`(`batchNo`, `nome`, `quantidade`) VALUES ("+tabela+")";
-            try {
-                statement.executeUpdate(query);
 
-                connection.close();
-                return true;
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-
-            }
         }
-        return false;
+        try {
+            statement.executeUpdate(query);
+
+            connection.close();
+            return true;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+
+        }
+
     }
 
 
@@ -461,9 +426,49 @@ public class Conexao {
 
         }
         query.append(buildQuery(clnIdetificacao,vlrIdentificacao));
+        try{
+            resultSet = statement.executeQuery(query.toString());
+            connection.close();
+        }catch (SQLException ee){
+            ee.printStackTrace();
+        }
 
         return sucesso;
     }
+
+
+    private boolean eliminar(Object tabela,String []atributos, String []valores){
+        String query = "DELETE FROM `";
+        if(tabela instanceof Ingrediente){
+            query+="ingredientemedicamento";
+
+        }else if(tabela instanceof Fornecedor){
+            query+="fornecedor";
+
+        }else if(tabela instanceof Funcionario){
+            query+="funcionario";
+
+        }else if(tabela instanceof Medicamento){
+            query+="medicamento";
+        }else if(tabela instanceof Venda){
+            query+="venda";
+        }else if(tabela instanceof Item){
+            query+="ingredientemedicamento";
+        }
+
+        query+= buildQuery(atributos,valores);
+        try {
+
+            resultSet = statement.executeQuery(query);
+
+            connection.close();
+        }catch (SQLException ee ){
+            ee.printStackTrace();
+        }
+
+        return true;
+    }
+
 
     public static void main(String []args){
         Conexao conexao = new Conexao();
@@ -473,17 +478,13 @@ public class Conexao {
         String []atributos = {"email", "password"};
 
 
-        Medicamento medicamento = new Medicamento("B2123","Paracetamol Genérico","Paracetamol",
-                Timestamp.valueOf("2024-10-01 00:00:00"),
-                1000,10,"Antibióticos","843456789","",1100);
-        if (conexao.inserir(medicamento)){
-            System.out.println("Medicamento introduzido");
-        }
+        usuario = conexao.consultaFuncionario(atributos,valores);
+        System.out.println();
         //Funcionario funcionario = new Funcionario("Salow","Edward",Timestamp.valueOf("2226-01-01"),"875461243",);
 
         Venda venda = new Venda();
         Timestamp data = Timestamp.valueOf("2024-10-01 00:00:00");
-        System.out.println(data.toString());
+        System.out.println(usuario);
 
 
 
