@@ -19,7 +19,7 @@ public class FuncionarioController {
         String[] valores = {email, password};
         String[] atributos = {"email", "password"};
 
-        funcionario = conexao.consultaFuncionario(atributos, valores);
+        funcionario = conexao.consultaFuncionario(atributos, valores).get(0);
 
         if (funcionario == null) {
             return false;
@@ -39,33 +39,33 @@ public class FuncionarioController {
     public String[][] lista(){
 
 
-        ArrayList<Object> funcionarios = new ArrayList<>();
-        funcionarios = conexao.consultalista(funcionario);
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        funcionarios = conexao.consultaFuncionario(null,null);
         lista = new String[funcionarios.size()][7];
         for(int i = 0; i<funcionarios.size();i++) {
             if(funcionarios.get(i) instanceof Funcionario){
                 for (int j = 0; j < 7;i++) {
                     switch (j){
                         case 0:
-                            lista[i][j] = String.valueOf(((Funcionario) funcionarios.get(i)).getIdFuncionaro());
+                            lista[i][j] = String.valueOf((funcionarios.get(i)).getIdFuncionaro());
                         break;
                         case 1:
-                            lista[i][j] = String.valueOf(((Funcionario) funcionarios.get(i)).getNome());
+                            lista[i][j] = String.valueOf((funcionarios.get(i)).getNome());
                             break;
                         case 2:
-                            lista[i][j] = String.valueOf(((Funcionario) funcionarios.get(i)).getApelido());
+                            lista[i][j] = String.valueOf((funcionarios.get(i)).getApelido());
                             break;
                         case 3:
-                            lista[i][j] = String.valueOf(((Funcionario) funcionarios.get(i)).getDataNascimento());
+                            lista[i][j] = String.valueOf((funcionarios.get(i)).getDataNascimento());
                             break;
                         case 4:
-                            lista[i][j] = String.valueOf(((Funcionario) funcionarios.get(i)).getEmail());
+                            lista[i][j] = String.valueOf((funcionarios.get(i)).getEmail());
                             break;
                         case 5:
-                            lista[i][j] = String.valueOf(((Funcionario) funcionarios.get(i)).getContacto());
+                            lista[i][j] = String.valueOf((funcionarios.get(i)).getContacto());
                             break;
                         case 6:
-                            lista[i][j] = String.valueOf(((Funcionario) funcionarios.get(i)).getPassword());
+                            lista[i][j] = String.valueOf((funcionarios.get(i)).getPassword());
                             break;
                     }
                 }

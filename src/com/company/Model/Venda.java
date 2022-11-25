@@ -11,11 +11,9 @@ public class Venda {
     private float desconto;
     private int valor_pago;
     private ArrayList<Item> itens = new ArrayList<>();
-    private String tabela = "venda";
 
-    public Venda() {
-        this.idVenda = 2;
-    }
+
+
 
     public ArrayList<Item> getItens() {
         return itens;

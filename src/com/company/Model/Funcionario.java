@@ -87,7 +87,6 @@ private String tabela = "funcionario";
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.contacto = contacto;
-        this.idFuncionaro = idFuncionaro;
         this.email = email;
         this.password = password;
     }

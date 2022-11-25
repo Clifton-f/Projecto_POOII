@@ -17,7 +17,7 @@ public class Medicamento {
     private String tabela = "medicamento";
 
     public Medicamento(String batchNo, String nome_comercial, String nome_generico, Timestamp validade, int preco_compra,
-                       int preco_venda, String classificacao, String contacto, String descricao, int quantidade) {
+                       int preco_venda, String classificacao, String contacto, int quantidade) {
         this.batchNo = batchNo;
         this.nome_comercial = nome_comercial;
         this.nome_generico = nome_generico;
@@ -26,7 +26,7 @@ public class Medicamento {
         this.preco_venda = preco_venda;
         this.classificacao = classificacao;
         this.contactoFornecedor = contacto;
-        this.descricao = descricao;
+
         this.quatidade = quantidade;
     }
 
@@ -44,7 +44,7 @@ public class Medicamento {
         return batchNo;
     }
 
-    /*public void setBatchNo(String batchNo) {
+    public void setBatchNo(String batchNo) {
         this.batchNo = batchNo;
     }
 
@@ -73,11 +73,11 @@ public class Medicamento {
     }
 
     public int getStock() {
-        return stock;
+        return quatidade;
     }
 
     public void setStock(int stock) {
-        this.stock = stock;
+        this.quatidade = stock;
     }
 
     public int getPreco_compra() {
@@ -105,11 +105,11 @@ public class Medicamento {
     }
 
     public String getContacto() {
-        return contacto;
+        return contactoFornecedor;
     }
 
     public void setContacto(String contacto) {
-        this.contacto = contacto;
+        this.contactoFornecedor = contacto;
     }
 
     public String getDescricao() {
@@ -118,7 +118,7 @@ public class Medicamento {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }*/
+    }
 
     public String[][] toArray(){
         String [][]array = new String[10][2];

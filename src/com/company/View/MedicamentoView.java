@@ -1,5 +1,6 @@
 package com.company.View;
 
+import com.company.Controller.FornecedorController;
 import com.company.Controller.MedicamentoController;
 
 
@@ -9,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +29,7 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
     JLabel []lblDosagem = new JLabel[6];
     JSpinner spnData;
     JComboBox<String> cmbClassificacao;
+    JComboBox<String> cmbFornecedor;
     JButton btnNext = new JButton("Póximo");
     JButton btnPrevious = new JButton("Anterior");
     JButton btnAddIngrediente = new JButton("Add");
@@ -33,8 +37,7 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
     JSeparator separator = new JSeparator();
     CustomizarView atributo = new CustomizarView();
     GridLayout gl;
-    MedicamentoController mc = new MedicamentoController();
-
+    private FornecedorController fornecedorC = new FornecedorController();
     //Variaveis de auxílio
     private int numIngrediente = 3;
     private CardLayout cl = new CardLayout();
@@ -389,7 +392,17 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
         }
         else if(e.getSource() == btnSave){
-            controller.inserir();
+            String []atributos = new String[lblMedicamento.length];
+            String []valores = new String[lblMedicamento.length];
+            String fornecedor = cmbFornecedor.getSelectedItem().toString();
+            String classe = cmbClassificacao.getSelectedItem().toString();
+
+
+            controller.inserir(txtMedicamento[0].getText(),txtMedicamento[1].getText(),txtMedicamento[2].getText(), Timestamp.valueOf(spnData.getValue().toString()),Integer.parseInt(txtMedicamento[5].getText()),Integer.parseInt(txtMedicamento[6].getText()),
+                    cmbClassificacao.getSelectedItem().toString(),
+                            cmbFornecedor.getSelectedItem().toString()
+                            ,Integer.parseInt(txtMedicamento[4].getText()));
+
         }
 
     }

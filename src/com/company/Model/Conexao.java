@@ -74,31 +74,6 @@ public class Conexao {
 
     }
 
-    public ArrayList<Object> consultalista(Object tabela){
-        String query = "SELECT * FROM ";
-        if (tabela instanceof Venda) {
-            query += "venda " + ";";
-        } else if (tabela instanceof Medicamento) {
-            query += "medicamento " + ";";
-        } else if (tabela instanceof Fornecedor) {
-            query += "fornecedor " + ";";
-        } else if (tabela instanceof Funcionario) {
-            query += "funcionario " + ";";
-        } else if (tabela instanceof Item) {
-            query += "vendamedicamento " + ";";
-        } else if (tabela instanceof Ingrediente) {
-            query += "ingredientemedicamento " + ";";
-        }
-
-        try {
-
-            resultSet = statement.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultados;
-
-    }
 
     /*public ArrayList<Funcionario> consultalista(Funcionario tabela){
         String query = "SELECT * FROM funcionario";
@@ -113,11 +88,15 @@ public class Conexao {
 
         }*/
 
-    public Venda consultaVenda(String[] atributos, String[] valores) {
+    public ArrayList<Venda> consultaVenda(String[] atributos, String[] valores) {
+
         String query = "SELECT * FROM venda ";
-        Venda venda = new Venda();
-        String parametros = buildQuery(atributos, valores);
-        query += "\n" + parametros + ";";
+        if (atributos != null){
+            String parametros = buildQuery(atributos, valores);
+            query += "\n" + parametros + ";";
+        }
+        ArrayList<Venda> lstvenda = new ArrayList<>();
+
 
 
         try {
@@ -125,67 +104,73 @@ public class Conexao {
 
             resultSet = statement.executeQuery(query);
 
-            if (resultSet.next()==false){
-                return null;
-            }else {
-
+            while (resultSet.next()!=false){
+                Venda venda;
                 venda = new Venda(resultSet.getTimestamp(2),
                         resultSet.getInt(3),resultSet.getFloat(4),resultSet.getInt(5));
                 venda.setIdVenda(resultSet.getInt(1));
+                lstvenda.add(venda);
 
             }
-
+            return lstvenda;
 
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return venda;
     }
 
-    public Medicamento consultaMedicamento(String[] atributos, String[] valores) {
+    public ArrayList<Medicamento> consultaMedicamento(String[] atributos, String[] valores) {
         String query = "SELECT * FROM medicamento ";
-        Medicamento medicamento =null;
-        String parametros = buildQuery(atributos, valores);
-        query += "\n" + parametros + ";";
 
+        if (atributos != null){
+            String parametros = buildQuery(atributos, valores);
+            query += "\n" + parametros + ";";
+        }
+        ArrayList<Medicamento>lstMedicamento = new ArrayList<>();
 
         try {
 
-
             resultSet = statement.executeQuery(query);
-            if (resultSet.next()==false){
-                return null;
-            }else {
+            while (resultSet.next()!=false){
+                Medicamento medicamento = new Medicamento(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getTimestamp(4),resultSet.getInt(5),
+                        resultSet.getInt(6),resultSet.getString(7),resultSet.getString(8),resultSet.getInt(10));
 
-                medicamento = new Medicamento(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getTimestamp(4),
-                        resultSet.getInt(5),resultSet.getInt(6),resultSet.getString(7),
-                        resultSet.getString(8),resultSet.getString(9),resultSet.getInt(10));
+                lstMedicamento.add(medicamento);
+
             }
 
 
 
-
+            return lstMedicamento;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return medicamento;
+
     }
+
     public Fornecedor consultaFornecedor(String[] atributos, String[] valores) {
         String query = "SELECT * FROM fornecedor ";
         Fornecedor fornecedor = null;
-        String parametros = buildQuery(atributos, valores);
-        query += "\n" + parametros + ";";
+        if (atributos != null){
+            String parametros = buildQuery(atributos, valores);
+            query += "\n" + parametros + ";";
+        }
+        ArrayList<Fornecedor> lstMedicamento = new ArrayList<>();
+
 
 
         try {
 
             resultSet = statement.executeQuery(query);
-            if (resultSet.next()==false){
-                return null;
-            }else {
+            while (resultSet.next()!=false){
+
                 fornecedor = new Fornecedor(resultSet.getString(1),resultSet.getString(2),resultSet.getString(4),
                         resultSet.getString(3));
+                lstMedicamento.add(fornecedor);
+
             }
 
 
@@ -196,63 +181,71 @@ public class Conexao {
         return fornecedor;
     }
 
-    public Funcionario consultaFuncionario(String[] atributos, String[] valores) {
+    public ArrayList<Funcionario> consultaFuncionario(String[] atributos, String[] valores) {
         String query = "SELECT * FROM funcionario ";
-        Funcionario funcionario = null;
-        String parametros = buildQuery(atributos, valores);
-        query += "\n" + parametros + ";";
+
+        if (atributos!= null){
+            String parametros = buildQuery(atributos, valores);
+            query += "\n" + parametros + ";";
+        }
+        ArrayList<Funcionario> lstFuncionario = new ArrayList<>();
 
         try {
 
             resultSet = statement.executeQuery(query);
             //resultSet.next();
 
-            if(resultSet.next() == false){
-                return null;
-            }else {
+
+            while (resultSet.next() != false){
 
 
-                funcionario = new Funcionario(resultSet.getString(3)
+                Funcionario funcionario = new Funcionario(resultSet.getString(3)
                         , resultSet.getString(2),
                         resultSet.getTimestamp(4),
                         resultSet.getString(6)
                         , resultSet.getString(5),
                         resultSet.getString(7));
                 funcionario.setIdFuncionaro(resultSet.getInt(1));
+                lstFuncionario.add(funcionario);
+
             }
 
-
+            return lstFuncionario;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return funcionario;
+
     }
 
-    public Ingrediente consultaIngrediente(String[] atributos, String[] valores) {
+    public ArrayList<Ingrediente> consultaIngrediente(String[] atributos, String[] valores) {
         String query = "SELECT * FROM ingrediente ";
-        Ingrediente ingrediente = new Ingrediente("s", "s", 4);
-        String parametros = buildQuery(atributos, valores);
-        query += "\n" + parametros + ";";
+        ArrayList <Ingrediente> lstIngredientes = new ArrayList<>();
+        if(atributos != null){
+            String parametros = buildQuery(atributos, valores);
+            query += "\n" + parametros + ";";
+
+        }
+
 
         try {
 
             resultSet = statement.executeQuery(query);
 
-            if(resultSet.next() == false){
-                return null;
-            }else {
-                ingrediente = new Ingrediente(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3));
+            while (resultSet.next() != false){
 
+                Ingrediente ingrediente = new Ingrediente(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3));
+                lstIngredientes.add(ingrediente);
 
             }
-
-
+            return lstIngredientes;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return ingrediente;
+
     }
 
 
@@ -478,11 +471,11 @@ public class Conexao {
         String []atributos = {"email", "password"};
 
 
-        usuario = conexao.consultaFuncionario(atributos,valores);
+        usuario = conexao.consultaFuncionario(atributos,valores).get(0);
         System.out.println();
         //Funcionario funcionario = new Funcionario("Salow","Edward",Timestamp.valueOf("2226-01-01"),"875461243",);
 
-        Venda venda = new Venda();
+
         Timestamp data = Timestamp.valueOf("2024-10-01 00:00:00");
         System.out.println(usuario);
 
