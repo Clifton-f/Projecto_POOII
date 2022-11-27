@@ -9,6 +9,7 @@ public class FornecedorView extends JPanel implements ActionListener {
     JLabel lblFornecedor = new JLabel("Adicionar fornecedor");
     JLabel []lblDados  = new JLabel[4];
     JLabel []cabecalho = new JLabel[2];
+    JTextField []txtFornecedor = new JTextField[4];
     JTextField txtNome = new JTextField("Nome");
     JTextField txtEmail= new JTextField("Email");
     JTextField txtContacto = new JTextField("Contacto");
@@ -19,6 +20,26 @@ public class FornecedorView extends JPanel implements ActionListener {
 
 
     public FornecedorView(){
+
+        this.setBackground(Color.YELLOW);
+        inicializarElementos();
+        adicionarElementosAoPainel();
+
+
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btnAdd){
+            System.out.println("Funciona");
+        }
+        else if(e.getSource() == btnRmv){
+            System.out.println("Funciona");
+        }
+    }
+
+    public void inicializarElementos(){
         JLabel[]lblDados = new JLabel[4];
         lblDados[0] = new JLabel("Nome");
         lblDados[1] = new JLabel("Contacto");
@@ -31,7 +52,7 @@ public class FornecedorView extends JPanel implements ActionListener {
         btnRmv.addActionListener(this);
 
 
-        JTextField []txtFornecedor = new JTextField[4];
+
         for (int i = 0; i<4;i++){
             txtFornecedor[i] = new JTextField();
             txtFornecedor[i].setPreferredSize(new Dimension(560,36));
@@ -40,9 +61,13 @@ public class FornecedorView extends JPanel implements ActionListener {
         }
 
         JLabel txtaddFornecedor = new JLabel("Adicionar Fornecedr");
+
+
+    }
+
+    public void adicionarElementosAoPainel(){
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
-        this.setBackground(Color.YELLOW);
         this.setLayout(gbl);
         gbc.weightx=1;
         gbc.weighty=0;
@@ -103,9 +128,8 @@ public class FornecedorView extends JPanel implements ActionListener {
 
         //this.add(txtMedicamento[3],gbc);
 
-
-
     }
+
     public static void main(String[]args){
         JFrame tela = new JFrame();
         tela.add(new FornecedorView());
@@ -114,13 +138,6 @@ public class FornecedorView extends JPanel implements ActionListener {
         tela.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnAdd){
-            System.out.println("Funciona");
-        }
-        else if(e.getSource() == btnRmv){
-            System.out.println("Funciona");
-        }
-    }
+
+
 }

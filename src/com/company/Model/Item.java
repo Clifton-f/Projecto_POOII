@@ -18,17 +18,17 @@ public class Item {
                 "', '" + quantidade+ "'";
     }
     public String[][] toArray(){
-        String [][]array = new String[3][2];
+        String [][]array = new String[2][3];
 
         array[0][0] = "batchNo";
-        array[1][0] = "idVenda";
-        array[2][0] = "quantidade";
+        array[0][1] = "idVenda";
+        array[0][2] = "quantidade";
 
 
 
-        array[0][1] = this.batchNo;
+        array[1][0] = this.batchNo;
         array[1][1] = this.idVenda;
-        array[2][1] = String.valueOf(this.quantidade);
+        array[1][2] = String.valueOf(this.quantidade);
 
 
         return array;

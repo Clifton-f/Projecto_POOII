@@ -1,9 +1,7 @@
 package com.company.Controller;
 
 import com.company.Model.Conexao;
-import com.company.Model.Funcionario;
 import com.company.Model.Medicamento;
-import com.company.Model.Fornecedor;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ public class MedicamentoController {
             "Laxantes", "Diarréia e colite ulcerativa", "Náusea"};
     public MedicamentoController() {
         Arrays.sort(classificacao);
-        ArrayList<Medicamento> list = conexao.consultaMedicamento(null,null);
+        ArrayList<Medicamento> list = conexao.consultarMedicamento(null,null);
         fornecedores = new String[list.size()][2];
 
         for(int i = 0; i<list.size();i++){
@@ -38,6 +36,8 @@ public class MedicamentoController {
 
 
     public String[] getClassificacao() {
+        ArrayList<String> lista = conexao.consultarClassificacao();
+
         return classificacao;
     }
 
@@ -61,7 +61,7 @@ public class MedicamentoController {
 
 
         ArrayList<Medicamento> lstMedicamentos = new ArrayList<>();
-        lstMedicamentos = conexao.consultaMedicamento(null,null);
+        lstMedicamentos = conexao.consultarMedicamento(null,null);
         lista = new String[lstMedicamentos.size()][6];
         for(int i = 0; i<lstMedicamentos.size();i++) {
                 for (int j = 0; j < 6;i++) {

@@ -1,5 +1,6 @@
 package com.company.Controller;
 
+import com.company.Apoio.ConversaoDS;
 import com.company.Model.Conexao;
 import com.company.Model.Fornecedor;
 import com.company.Model.Funcionario;
@@ -11,6 +12,7 @@ public class FornecedorController {
     private String[][] lista;
     private Fornecedor fornecedor;
     private Conexao conexao = new Conexao();
+    private ConversaoDS convertorDeED = new ConversaoDS();
 
     public FornecedorController(){
 
@@ -25,35 +27,16 @@ public class FornecedorController {
 
     }
 
+    public String[][]listarFornecedores(){
 
-    public Object[] listarFornecedores(){
 
-
-        ArrayList<Object> fornecedores = new ArrayList<>();
-        fornecedores = conexao.consultalista(fornecedor);
+        ArrayList<Fornecedor> fornecedores = new ArrayList<>();
+        fornecedores = conexao.consultarFornecedor();
         lista = new String[fornecedores.size()][7];
+        lista[0] = (String[]) fornecedores.toArray()[0];
         for(int i = 0; i<fornecedores.size();i++) {
-            if(fornecedores.get(i) instanceof Fornecedor){
-                for (int j = 0; j < 4;i++) {
-                    switch (j){
-                        case 0:
-
-                            lista[i][j] = String.valueOf(((Fornecedor) fornecedores.get(i)).getNome());
-                            break;
-                        case 1:
-                            lista[i][j] = String.valueOf(((Fornecedor) fornecedores.get(i)).getContacto());
-                            break;
-                        case 2:
-                            lista[i][j] = String.valueOf(((Fornecedor) fornecedores.get(i)).getEmail());
-                            break;
-                        case 3:
-                            lista[i][j] = String.valueOf(((Fornecedor) fornecedores.get(i)).getEndereco());
-                            break;
-
-                    }
-                }
-
-            }
+            String [][]array = fornecedores.get(i).toArray();
+            lista[i+1] = array[1];
 
 
 
@@ -61,7 +44,12 @@ public class FornecedorController {
 
 
         return lista;
+
     }
+
+
+
+
 
     public String[] pegarElemento(String id, int iterador) {
         if(lista[iterador][0] ==id){

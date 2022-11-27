@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,8 +19,8 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
     JLabel []cabecalho= new JLabel[2];
     JLabel []lblMedicamento = new JLabel[10];
-    JLabel []lblIng = new JLabel[2];
-    JTextField []txtIng = new JTextField[2];
+    //JLabel []lblIng = new JLabel[2];
+    //JTextField []txtIng = new JTextField[2];
     ArrayList<JLabel[]> listalblIng = new ArrayList<>();
     ArrayList<JTextField[]> listatxtIng = new ArrayList<>();
     JTextField []txtMedicamento = new JTextField[8];
@@ -44,6 +43,14 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
     private GridBagConstraints gbc = new GridBagConstraints();
     private final JPanel pnlPrimario = new JPanel();
     private final JPanel pnlSecundario = new JPanel();
+    private final JPanel pnlMedicamento[] = new JPanel[2];
+    JLabel lblSubtituloPn2;
+    JLabel lblTituloPn2;
+    JLabel lblSubtituloPn1;
+    JLabel lblTituloPn1;
+
+
+    private int posicaoBtnAddIngredient = 3;
 
 
     MedicamentoController controller = new MedicamentoController();
@@ -51,92 +58,8 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
     public MedicamentoView(){
 
+        incializarComponentes();
         pnlPrimario.setBackground(atributo.getPainelCor());
-
-
-        cabecalho[0] = new JLabel("Adicionar Medicamento");
-        cabecalho[0].setFont(atributo.getTextoH1());
-        cabecalho[0].setForeground(atributo.getTextoCor());
-        cabecalho[1] = new JLabel("Informação do Medicamento");
-        separator.setOrientation(JSeparator.HORIZONTAL);
-
-        lblMedicamento[0] = new JLabel("BatchNo");
-        lblMedicamento[1] = new JLabel("Nome comercial");
-        lblMedicamento[2] = new JLabel("Nome genérico");
-        lblMedicamento[3] = new JLabel("Fornecedor");
-        lblMedicamento[4] = new JLabel("Validade");
-        lblMedicamento[5] = new JLabel("Quantidade");
-        lblMedicamento[6] = new JLabel("Preço de venda");
-        lblMedicamento[7] = new JLabel("preço de compra");
-        lblMedicamento[8] = new JLabel("Classificação");
-        lblMedicamento[9] = new JLabel("Descrição");
-
-
-        for (int i = 0; i<8;i++){
-            txtMedicamento[i] = new JTextField();
-            txtMedicamento[i].setFont(atributo.getTextoCorpo());
-            txtMedicamento[i].setText(String.valueOf(i));
-
-            txtMedicamento[i].setForeground(atributo.getTextoCor());
-
-            lblMedicamento[i].setFont(atributo.getTextoCorpo());
-            lblMedicamento[i].setForeground(atributo.getTextoCor());
-
-        }
-
-        String []classe = controller.getClassificacao();
-        cmbClassificacao = new JComboBox<>(classe);
-
-        //Dosagem
-
-        lblDosagem[0] = new JLabel("Dosagem para bebês (0-2)");
-        lblDosagem[1] = new JLabel("Dosagem para bebês (2-5)");
-        lblDosagem[2] = new JLabel("Dosagem para crianças (6-12)");
-        lblDosagem[3] = new JLabel("Dosagem para adolescentes (12-18)");
-        lblDosagem[4] = new JLabel("Dosagem para adultos (18- )");
-        lblDosagem[5] = new JLabel("Número de vezes por dia");
-
-
-        for(int i = 0; i<txtDosagem.length;i++){
-            txtDosagem[i] = new JTextField();
-            txtDosagem[i].setForeground(atributo.getTextoCor());
-            txtDosagem[i].setFont(atributo.getTextoCorpo());
-
-
-        }
-
-        JTextArea txaDescricao = new JTextArea(3,100);
-        txaDescricao.setPreferredSize(atributo.getTamanhoMax());
-        txaDescricao.setFont(atributo.getTextoCorpo());
-
-        //Ingredientes
-        lblIng[0] = new JLabel("Nome do Ingrediente");
-        txtIng[0] = new JTextField();
-        lblIng[1] = new JLabel("quantidade");
-        txtIng[1] = new JTextField();
-        listalblIng.add(lblIng);
-        listatxtIng.add(txtMedicamento);
-
-
-        //botões
-        btnNext.setForeground(atributo.getPainelCor());
-        btnNext.setBackground(atributo.getBotaoPCor());
-        btnNext.addActionListener(this);
-        btnPrevious.setForeground(atributo.getPainelCor());
-        btnPrevious.setBackground(atributo.getBotaoNCor());
-        btnPrevious.addActionListener(this);
-        btnAddIngrediente.setForeground(atributo.getPainelCor());
-        btnAddIngrediente.setBackground(atributo.getBotaoPCor());
-        btnAddIngrediente.addActionListener(this);
-
-
-        Date hj = new Date();
-        spnData = new JSpinner(new SpinnerDateModel(hj,null,null, Calendar.MONTH));
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(spnData, "dd/MM/yyyy");
-        spnData.setEditor(editor);
-        spnData.setFont(atributo.getTextoCorpo());
-
-
 
         setPnlPrimario();
         setPnlSecundario();
@@ -158,24 +81,20 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor=GridBagConstraints.FIRST_LINE_START;
 
-        JLabel lblTitulo = new JLabel("Adicionar Medicamento");
-        lblTitulo.setFont(atributo.getTextoH1());
-        JLabel lblSubtitulo = new JLabel("Informação do Medicamento");
-        lblSubtitulo.setFont(atributo.getTextoH2());
 
 
-        lblTitulo.setFont(atributo.getTextoH1());
-        lblTitulo.setForeground(atributo.getTextoCor());
+
+
         gbc.gridy = 1;
         gbc.insets=new Insets(10,15,10,15);
-        pnlPrimario.add(lblTitulo,gbc);
+        pnlPrimario.add(lblTituloPn1,gbc);
         gbc.gridy = 2;
         gbc.gridx = 0;
         //cabecalho[1].setFont(atributo.getTextoH2());
         gbc.insets=new Insets(8,30,20,15);
 
 
-        pnlPrimario.add(lblSubtitulo,gbc);
+        pnlPrimario.add(lblSubtituloPn1,gbc);
 
 
         /**
@@ -294,24 +213,20 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor=GridBagConstraints.FIRST_LINE_START;
 
-        JLabel lblTitulo = new JLabel("Adicionar Medicamento");
-        lblTitulo.setFont(atributo.getTextoH1());
-        JLabel lblSubtitulo = new JLabel("Informação do Medicamento");
-        lblSubtitulo.setFont(atributo.getTextoH2());
 
 
-        lblTitulo.setFont(atributo.getTextoH1());
-        lblTitulo.setForeground(atributo.getTextoCor());
+
+
         gbc.gridy = 1;
         gbc.insets=new Insets(10,15,10,15);
-        pnlSecundario.add(lblTitulo,gbc);
+        pnlSecundario.add(lblTituloPn2,gbc);
         gbc.gridy = 2;
         gbc.gridx = 0;
         //cabecalho[1].setFont(atributo.getTextoH2());
         gbc.insets=new Insets(8,30,20,15);
 
 
-        pnlSecundario.add(lblSubtitulo,gbc);
+        pnlSecundario.add(lblSubtituloPn2,gbc);
 
         gbc.gridwidth = 4;
         gbc.gridx=0;
@@ -338,20 +253,8 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         gbc.gridy = 14;
         pnlSecundario.add(txtDosagem[5],gbc);
 
-        gbc.gridx = 5;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        pnlSecundario.add(listalblIng.get(0)[0],gbc);
-        gbc.gridy = 4;
-        pnlSecundario.add(listatxtIng.get(0)[0],gbc);
-        gbc.gridx = 7;
-        gbc.gridy = 3;
-        gbc.gridwidth = 1;
-        pnlSecundario.add(listalblIng.get(0)[1],gbc);
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.BOTH;
-        pnlSecundario.add(listatxtIng.get(0)[1],gbc);
-
+        adicionarIngrediente();
+        cenasDoBotao();
 
         gbc.weighty=1;
         gbc.weightx=1;
@@ -372,10 +275,13 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
     public static void main(String[]args){
         JFrame tela = new JFrame();
-        tela.add(new MedicamentoView());
+        MedicamentoView mv = new MedicamentoView();
+        tela.add(mv);
         tela.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         tela.setSize(new Dimension(1280,720));
         tela.setVisible(true);
+
+
     }
 
     @Override
@@ -389,6 +295,10 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
             cl.previous(this);
         }
         else if(e.getSource() == btnAddIngrediente){
+
+            adicionarIngrediente();
+            actualizarPainel(pnlSecundario);
+            actualizarPainel(this);
 
         }
         else if(e.getSource() == btnSave){
@@ -409,6 +319,159 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
     @Override
     public void textValueChanged(TextEvent e) {
+
+    }
+
+    private void adicionarIngrediente(){
+
+        incializarElementosDosIngredientes();
+        pnlSecundario.remove(btnAddIngrediente);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 5;
+        gbc.gridy = posicaoBtnAddIngredient;
+        gbc.gridwidth = 2;
+        pnlSecundario.add(listalblIng.get(listalblIng.size()-1)[0],gbc);
+        gbc.gridy = posicaoBtnAddIngredient+1;
+        pnlSecundario.add(listatxtIng.get(listalblIng.size()-1)[0],gbc);
+        gbc.gridx = 7;
+        gbc.gridy = posicaoBtnAddIngredient;
+        gbc.gridwidth = 1;
+        pnlSecundario.add(listalblIng.get(listalblIng.size()-1)[1],gbc);
+        gbc.gridy = posicaoBtnAddIngredient+1;
+        gbc.fill = GridBagConstraints.BOTH;
+        pnlSecundario.add(listatxtIng.get(listalblIng.size()-1)[1],gbc);
+        gbc.gridy = posicaoBtnAddIngredient+2;
+        pnlSecundario.add(btnAddIngrediente,gbc);
+        for(int i=0; i>listalblIng.size();i++){
+            System.out.println(listalblIng.get(i)[1].getText());
+        }
+        System.out.println(listalblIng.size()-1);
+        posicaoBtnAddIngredient+=2;
+
+    }
+
+    private void incializarComponentes(){
+        inicializarCabecalho();
+        incializarElementosDosIngredientes();
+
+        lblTituloPn2 = new JLabel("Adicionar Medicamento");
+        lblTituloPn2.setFont(atributo.getTextoH1());
+        lblSubtituloPn2 = new JLabel("Informação do Medicamento");
+        lblSubtituloPn2.setFont(atributo.getTextoH2());
+        lblTituloPn1 = new JLabel("Adicionar Medicamento");
+        lblTituloPn1.setFont(atributo.getTextoH1());
+        lblSubtituloPn1 = new JLabel("Informação do Medicamento");
+        lblSubtituloPn1.setFont(atributo.getTextoH2());
+
+        cabecalho[0] = new JLabel("Adicionar Medicamento");
+        cabecalho[0].setFont(atributo.getTextoH1());
+        cabecalho[0].setForeground(atributo.getTextoCor());
+        cabecalho[1] = new JLabel("Informação do Medicamento");
+        separator.setOrientation(JSeparator.HORIZONTAL);
+
+        lblMedicamento[0] = new JLabel("BatchNo");
+        lblMedicamento[1] = new JLabel("Nome comercial");
+        lblMedicamento[2] = new JLabel("Nome genérico");
+        lblMedicamento[3] = new JLabel("Fornecedor");
+        lblMedicamento[4] = new JLabel("Validade");
+        lblMedicamento[5] = new JLabel("Quantidade");
+        lblMedicamento[6] = new JLabel("Preço de venda");
+        lblMedicamento[7] = new JLabel("preço de compra");
+        lblMedicamento[8] = new JLabel("Classificação");
+        lblMedicamento[9] = new JLabel("Descrição");
+
+
+        for (int i = 0; i<8;i++){
+            txtMedicamento[i] = new JTextField();
+            txtMedicamento[i].setFont(atributo.getTextoCorpo());
+            txtMedicamento[i].setText(String.valueOf(i));
+
+            txtMedicamento[i].setForeground(atributo.getTextoCor());
+
+            lblMedicamento[i].setFont(atributo.getTextoCorpo());
+            lblMedicamento[i].setForeground(atributo.getTextoCor());
+
+        }
+
+        String []classe = controller.getClassificacao();
+        cmbClassificacao = new JComboBox<>(classe);
+
+
+
+
+        //Dosagem
+
+        lblDosagem[0] = new JLabel("Dosagem para bebês (0-2)");
+        lblDosagem[1] = new JLabel("Dosagem para bebês (2-5)");
+        lblDosagem[2] = new JLabel("Dosagem para crianças (6-12)");
+        lblDosagem[3] = new JLabel("Dosagem para adolescentes (12-18)");
+        lblDosagem[4] = new JLabel("Dosagem para adultos (18- )");
+        lblDosagem[5] = new JLabel("Número de vezes por dia");
+
+
+        for(int i = 0; i<txtDosagem.length;i++){
+            txtDosagem[i] = new JTextField();
+            txtDosagem[i].setForeground(atributo.getTextoCor());
+            txtDosagem[i].setFont(atributo.getTextoCorpo());
+
+
+        }
+
+        JTextArea txaDescricao = new JTextArea(3,100);
+        txaDescricao.setPreferredSize(atributo.getTamanhoMax());
+        txaDescricao.setFont(atributo.getTextoCorpo());
+
+
+
+
+        //botões
+        btnNext.setForeground(atributo.getPainelCor());
+        btnNext.setBackground(atributo.getBotaoPCor());
+        btnNext.addActionListener(this);
+        btnPrevious.setForeground(atributo.getPainelCor());
+        btnPrevious.setBackground(atributo.getBotaoNCor());
+        btnPrevious.addActionListener(this);
+
+
+
+        Date hj = new Date();
+        spnData = new JSpinner(new SpinnerDateModel(hj,null,null, Calendar.MONTH));
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spnData, "dd/MM/yyyy");
+        spnData.setEditor(editor);
+        spnData.setFont(atributo.getTextoCorpo());
+    }
+
+    private void actualizarPainel(JPanel pnl){
+
+        pnl.revalidate();
+        pnl.repaint();
+    }
+
+    private void incializarElementosDosIngredientes(){
+        //Ingredientes
+        JLabel []lblIng = new JLabel[2];
+        lblIng[0] = new JLabel("Nome do Ingrediente");
+        JTextField txtIng[] = new JTextField[2];
+        txtIng[0] = new JTextField();
+        lblIng[1] = new JLabel("quantidade");
+        txtIng[1] = new JTextField();
+        listalblIng.add(lblIng);
+        listatxtIng.add(txtIng);
+
+
+
+    }
+    private void cenasDoBotao(){
+        btnAddIngrediente.setForeground(atributo.getPainelCor());
+        btnAddIngrediente.setBackground(atributo.getBotaoPCor());
+        btnAddIngrediente.addActionListener(this);
+    }
+
+    private void inicializarElementosDosIngredientes(){
+
+    }
+
+    private void inicializarCabecalho(){
 
     }
 }

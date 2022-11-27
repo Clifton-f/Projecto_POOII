@@ -8,7 +8,8 @@ public class Conexao {
     Connection connection;
     Statement statement;
     ResultSet resultSet;
-    ArrayList<Object> resultados;
+
+    String query;
 
 
     public Conexao() {
@@ -37,43 +38,6 @@ public class Conexao {
     }
 
 
-    public ArrayList<Object> consultalista(Object tabela, String[] atributos, String[] valores) {
-
-        StringBuilder parametros;
-        String query = "SELECT * FROM ";
-        parametros = new StringBuilder("WHERE " + atributos[0] + " = " + valores[0]);
-        for (int i = 1; i < atributos.length; i++) {
-            parametros.append("AND ").append(atributos[i]).append(" = ").append(valores[i]);
-
-
-        }
-
-
-        if (tabela instanceof Venda) {
-            query += "venda " + parametros + ";";
-        } else if (tabela instanceof Medicamento) {
-            query += "medicamento " + parametros + ";";
-        } else if (tabela instanceof Fornecedor) {
-            query += "fornecedor " + parametros + ";";
-        } else if (tabela instanceof Funcionario) {
-            query += "funcionario " + parametros + ";";
-        } else if (tabela instanceof Item) {
-            query += "vendamedicamento " + parametros + ";";
-        } else if (tabela instanceof Ingrediente) {
-            query += "ingredientemedicamento " + parametros + ";";
-        }
-
-        try {
-
-            resultSet = statement.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultados;
-
-
-    }
-
 
     /*public ArrayList<Funcionario> consultalista(Funcionario tabela){
         String query = "SELECT * FROM funcionario";
@@ -88,7 +52,7 @@ public class Conexao {
 
         }*/
 
-    public ArrayList<Venda> consultaVenda(String[] atributos, String[] valores) {
+    public ArrayList<Venda> consultarVenda(String[] atributos, String[] valores) {
 
         String query = "SELECT * FROM venda ";
         if (atributos != null){
@@ -121,7 +85,7 @@ public class Conexao {
         }
     }
 
-    public ArrayList<Medicamento> consultaMedicamento(String[] atributos, String[] valores) {
+    public ArrayList<Medicamento> consultarMedicamento(String[] atributos, String[] valores) {
         String query = "SELECT * FROM medicamento ";
 
         if (atributos != null){
@@ -151,13 +115,11 @@ public class Conexao {
 
     }
 
-    public Fornecedor consultaFornecedor(String[] atributos, String[] valores) {
+    public ArrayList<Fornecedor> consultarFornecedor(String[] atributos, String[] valores) {
         String query = "SELECT * FROM fornecedor ";
         Fornecedor fornecedor = null;
-        if (atributos != null){
-            String parametros = buildQuery(atributos, valores);
-            query += "\n" + parametros + ";";
-        }
+        String parametros = buildQuery(atributos, valores);
+        query += parametros + ";";
         ArrayList<Fornecedor> lstMedicamento = new ArrayList<>();
 
 
@@ -178,10 +140,35 @@ public class Conexao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return fornecedor;
+        return lstMedicamento;
     }
 
-    public ArrayList<Funcionario> consultaFuncionario(String[] atributos, String[] valores) {
+    public ArrayList<Fornecedor> consultarFornecedor() {
+        String query = "SELECT * FROM fornecedor ";
+        Fornecedor fornecedor = null;
+
+        ArrayList<Fornecedor> lstMedicamento = new ArrayList<>();
+
+        try {
+
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()!=false){
+
+                fornecedor = new Fornecedor(resultSet.getString(1),resultSet.getString(2),resultSet.getString(4),
+                        resultSet.getString(3));
+                lstMedicamento.add(fornecedor);
+
+            }
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lstMedicamento;
+    }
+
+    public ArrayList<Funcionario> consultarFuncionario(String[] atributos, String[] valores) {
         String query = "SELECT * FROM funcionario ";
 
         if (atributos!= null){
@@ -219,8 +206,8 @@ public class Conexao {
 
     }
 
-    public ArrayList<Ingrediente> consultaIngrediente(String[] atributos, String[] valores) {
-        String query = "SELECT * FROM ingrediente ";
+    public ArrayList<Ingrediente> consultarIngrediente(String[] atributos, String[] valores) {
+        query = "SELECT * FROM ingrediente ";
         ArrayList <Ingrediente> lstIngredientes = new ArrayList<>();
         if(atributos != null){
             String parametros = buildQuery(atributos, valores);
@@ -247,6 +234,22 @@ public class Conexao {
         }
 
     }
+
+    public ArrayList<String> consultarClassificacao(){
+        query = "SELECT * FROM classificacao";
+        try {
+            ArrayList<String> classificacoes = new ArrayList<>();
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next() != false){
+                classificacoes.add(resultSet.getString(1));
+            }
+            return classificacoes;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
 
@@ -471,7 +474,7 @@ public class Conexao {
         String []atributos = {"email", "password"};
 
 
-        usuario = conexao.consultaFuncionario(atributos,valores).get(0);
+        usuario = conexao.consultarFuncionario(atributos,valores).get(0);
         System.out.println();
         //Funcionario funcionario = new Funcionario("Salow","Edward",Timestamp.valueOf("2226-01-01"),"875461243",);
 

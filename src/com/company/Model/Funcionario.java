@@ -91,22 +91,22 @@ private String tabela = "funcionario";
         this.password = password;
     }
     public String[][] toArray(){
-        String [][]array = new String[7][2];
+        String [][]array = new String[2][7];
         array[0][0] = "id";
-        array[1][0] = "nome";
-        array[2][0] = "apelido";
-        array[3][0] = "data de nascimento";
-        array[4][0] = "email";
-        array[5][0] = "contacto";
-        array[6][0] = "password";
+        array[0][1] = "nome";
+        array[0][2] = "apelido";
+        array[0][3] = "data de nascimento";
+        array[0][4] = "email";
+        array[0][5] = "contacto";
+        array[0][6] = "password";
 
-        array[0][1] = String.valueOf(this.idFuncionaro);
+        array[1][0] = String.valueOf(this.idFuncionaro);
         array[1][1] = this.nome;
-        array[2][1] = this.apelido;
-        array[3][1] = String.valueOf(this.dataNascimento);
-        array[4][1] = this.email;
-        array[5][1] = this.contacto;
-        array[6][1] = this.password;
+        array[1][2] = this.apelido;
+        array[1][3] = String.valueOf(this.dataNascimento);
+        array[1][4] = this.email;
+        array[1][5] = this.contacto;
+        array[1][6] = this.password;
 
         return array;
     }

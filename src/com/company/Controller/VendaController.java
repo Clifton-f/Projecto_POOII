@@ -1,7 +1,7 @@
 package com.company.Controller;
 
+import com.company.Apoio.ConversaoDS;
 import com.company.Model.Conexao;
-import com.company.Model.Fornecedor;
 import com.company.Model.Item;
 import com.company.Model.Venda;
 
@@ -12,6 +12,7 @@ public class VendaController {
     Conexao conexao = new Conexao();
     Venda venda;
     String [][]lista;
+    ConversaoDS convertor;
 
     public boolean addVenda(Timestamp data, int valorTotal, float desconto, int valorPago){
         Venda venda = new Venda(data, valorTotal,desconto,valorPago);
@@ -31,40 +32,28 @@ public class VendaController {
     }
 
     public Object[] listarFornecedores(){
-
-
-        ArrayList<Venda> vendas = new ArrayList<>();
-        vendas = conexao.consultaVenda(null,null);
-        lista = new String[vendas.size()][7];
-        for(int i = 0; i<vendas.size();i++) {
-            for (int j = 0; j < 4;i++) {
-
-                switch (j){
-
-                    case 0:
-                        lista[i][j] = String.valueOf(vendas.get(i).getIdVenda());
-                        break;
-                    case 1:
-                        lista[i][j] = String.valueOf(vendas.get(i).getValor_total());
-                        break;
-                    case 2:
-                        lista[i][j] = String.valueOf(vendas.get(i).getDesconto());
-                        break;
-                    case 3:
-                        lista[i][j] = String.valueOf(vendas.get(i).getValor_pago());
-                        break;
-                    case 4:
-                        lista[i][j] = String.valueOf(vendas.get(i).getData());
-                    }
-
-            }
-
-
+        ArrayList<Venda> listaDVendas = new ArrayList<>();
+        listaDVendas = conexao.consultarVenda(null,null);
+        lista = new String[listaDVendas.size()][5];
+        for(int i = 0; i<listaDVendas.size();i++) {
+            lista[i] = criarTupla(listaDVendas.get(i));
 
         }
 
 
         return lista;
+    }
+
+    public String []criarTupla(Venda venda){
+        String []tupla = new String[5];
+
+        tupla[0] = String.valueOf(venda.getIdVenda());
+        tupla[1] = String.valueOf(venda.getValor_total());
+        tupla[2] = String.valueOf(venda.getDesconto());
+        tupla[3] = String.valueOf(venda.getValor_pago());
+        tupla[4] = String.valueOf(venda.getData());
+
+        return tupla;
     }
 
     public String[] pegarElemento(String id, int iterador) {
@@ -77,7 +66,8 @@ public class VendaController {
         }
     }
 
-    public boolean actualizar(Timestamp data, int valorTotal, float desconto, int valorPago, String []clnActualizadas){
+    public boolean actualizar(Timestamp data, int valorTotal, float desconto, int valorPago//,String []valores
+            , String []clnActualizadas){
         boolean sucesso = false;
         ArrayList<ArrayList<String>> lstParametros = new ArrayList<>();
         //ArrayList<String> parametrosQuery

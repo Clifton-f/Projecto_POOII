@@ -121,30 +121,30 @@ public class Medicamento {
     }
 
     public String[][] toArray(){
-        String [][]array = new String[10][2];
+        String [][]array = new String[2][10];
 
         array[0][0] = "batch No.";
-        array[1][0] = "Nome comercial";
-        array[2][0] = "Nome Genérico";
-        array[3][0] = "validade";
-        array[4][0] = "preco de compra";
-        array[5][0] = "preco de venda";
-        array[6][0] = "classificacao";
-        array[7][1] = "contacto do fornecedor";
-        array[8][1] = "descricao";
-        array[9][1] = "quantidade";
+        array[0][1] = "Nome comercial";
+        array[0][2] = "Nome Genérico";
+        array[0][3] = "validade";
+        array[0][4] = "preco de compra";
+        array[0][5] = "preco de venda";
+        array[0][6] = "classificacao";
+        array[0][7] = "contacto do fornecedor";
+        array[0][8] = "descricao";
+        array[0][9] = "quantidade";
 
 
-        array[0][1] = this.batchNo;
+        array[1][0] = this.batchNo;
         array[1][1] = this.nome_comercial;
-        array[2][1] = this.nome_generico;
-        array[3][1] = String.valueOf(this.validade);
-        array[4][1] = String.valueOf(preco_compra);
-        array[5][1] = String.valueOf(preco_venda);
-        array[6][1] = classificacao;
-        array[7][1] = contactoFornecedor;
-        array[8][1] = descricao;
-        array[9][1] = String.valueOf(quatidade);
+        array[1][2] = this.nome_generico;
+        array[1][3] = String.valueOf(this.validade);
+        array[1][4] = String.valueOf(preco_compra);
+        array[1][5] = String.valueOf(preco_venda);
+        array[1][6] = classificacao;
+        array[1][7] = contactoFornecedor;
+        array[1][8] = descricao;
+        array[1][9] = String.valueOf(quatidade);
 
         return array;
     }

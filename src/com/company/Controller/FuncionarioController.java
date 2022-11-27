@@ -19,7 +19,7 @@ public class FuncionarioController {
         String[] valores = {email, password};
         String[] atributos = {"email", "password"};
 
-        funcionario = conexao.consultaFuncionario(atributos, valores).get(0);
+        funcionario = conexao.consultarFuncionario(atributos, valores).get(0);
 
         if (funcionario == null) {
             return false;
@@ -40,7 +40,7 @@ public class FuncionarioController {
 
 
         ArrayList<Funcionario> funcionarios = new ArrayList<>();
-        funcionarios = conexao.consultaFuncionario(null,null);
+        funcionarios = conexao.consultarFuncionario(null,null);
         lista = new String[funcionarios.size()][7];
         for(int i = 0; i<funcionarios.size();i++) {
             if(funcionarios.get(i) instanceof Funcionario){

@@ -72,21 +72,21 @@ public class Venda {
     }
 
     public String[][] toArray(){
-        String [][]array = new String[5][2];
+        String [][]array = new String[2][5];
 
         array[0][0] = "idVenda";
-        array[1][0] = "data";
-        array[2][0] = "valor total";
-        array[3][0] = "desconto";
-        array[4][0] = "valor pago";
+        array[0][1] = "data";
+        array[0][2] = "valor total";
+        array[0][3] = "desconto";
+        array[0][4] = "valor pago";
 
 
 
-        array[0][1] = String.valueOf(this.idVenda);
+        array[1][0] = String.valueOf(this.idVenda);
         array[1][1] = String.valueOf(this.data);
-        array[2][1] = String.valueOf(this.valor_total);
-        array[3][1] = String.valueOf(this.desconto);
-        array[4][1] = String.valueOf(this.valor_pago);
+        array[1][2] = String.valueOf(this.valor_total);
+        array[1][3] = String.valueOf(this.desconto);
+        array[1][4] = String.valueOf(this.valor_pago);
 
         return array;
     }
