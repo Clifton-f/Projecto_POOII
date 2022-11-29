@@ -18,7 +18,8 @@ public class IngredienteMedicamentoController {
 
     }
 
-    public boolean inserirIngrediente(){
+    public boolean inserirIngrediente(String []ingrediente){
+        criarIngrediente(ingrediente[0],ingrediente[1],Integer.parseInt(ingrediente[2]));
         sucesso = conexao.inserir(ingrediente);
         return sucesso;
     }

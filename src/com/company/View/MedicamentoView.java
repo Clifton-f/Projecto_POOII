@@ -1,6 +1,7 @@
 package com.company.View;
 
 import com.company.Controller.FornecedorController;
+import com.company.Controller.IngredienteMedicamentoController;
 import com.company.Controller.MedicamentoController;
 
 
@@ -24,14 +25,15 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
     ArrayList<JLabel[]> listalblIng = new ArrayList<>();
     ArrayList<JTextField[]> listatxtIng = new ArrayList<>();
     JTextField []txtMedicamento = new JTextField[8];
-    JTextField []txtDosagem = new JTextField[6];
-    JLabel []lblDosagem = new JLabel[6];
+    JTextField []txtDosagem = new JTextField[5];
+    JLabel []lblDosagem = new JLabel[5];
     JSpinner spnData;
     JComboBox<String> cmbClassificacao;
     JComboBox<String> cmbFornecedor;
     JButton btnNext = new JButton("Póximo");
     JButton btnPrevious = new JButton("Anterior");
-    JButton btnAddIngrediente = new JButton("Add");
+    JButton btnAddIngrediente = new JButton("Adicionar");
+    JButton btnRmvIngrediente = new JButton("Remover");
     JButton btnSave = new JButton("Gravar");
     JSeparator separator = new JSeparator();
     CustomizarView atributo = new CustomizarView();
@@ -53,7 +55,8 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
     private int posicaoBtnAddIngredient = 3;
 
 
-    MedicamentoController controller = new MedicamentoController();
+    MedicamentoController controllerMedicamento = new MedicamentoController();
+    IngredienteMedicamentoController ingredienteController = new IngredienteMedicamentoController();
 
 
     public MedicamentoView(){
@@ -232,7 +235,7 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         gbc.gridx=0;
         gbc.insets=new Insets(10,30,0,10);
 
-        for(int i=0; i<5; i++){
+        for(int i=0; i<4; i++){
 
 
             gbc.gridy = 3+2*i;
@@ -246,19 +249,19 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
 
         }
-        gbc.gridy = 13;
+        gbc.gridy = 11;
         gbc.ipady = 10;
-        pnlSecundario.add(lblDosagem[5],gbc);
+        pnlSecundario.add(lblDosagem[4],gbc);
         gbc.ipady = 10;
-        gbc.gridy = 14;
-        pnlSecundario.add(txtDosagem[5],gbc);
+        gbc.gridy = 12;
+        pnlSecundario.add(txtDosagem[4],gbc);
 
         adicionarIngrediente();
-        cenasDoBotao();
+        inicializarBotoes();
 
         gbc.weighty=1;
         gbc.weightx=1;
-        gbc.gridy=15;
+        gbc.gridy=GridBagConstraints.LAST_LINE_END;
         gbc.gridheight=GridBagConstraints.REMAINDER;
         gbc.ipady = 10;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -267,6 +270,9 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         gbc.anchor = GridBagConstraints.LAST_LINE_START;
         gbc.insets = new Insets(0,15,50,0);
         pnlSecundario.add(btnPrevious,gbc);
+        gbc.gridx = 5;
+        gbc.anchor = GridBagConstraints.LAST_LINE_END;
+        pnlSecundario.add(btnSave,gbc);
 
 
 
@@ -301,45 +307,6 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnNext){
-                cl.next(this);
-
-
-        }
-        else if(e.getSource()==btnPrevious){
-            cl.previous(this);
-        }
-        else if(e.getSource() == btnAddIngrediente){
-
-            adicionarIngrediente();
-            actualizarPainel(pnlSecundario);
-            actualizarPainel(this);
-
-        }
-        else if(e.getSource() == btnSave){
-            String []atributos = new String[lblMedicamento.length];
-            String []valoresMedicamento = new String[lblMedicamento.length];
-            String fornecedor = cmbFornecedor.getSelectedItem().toString();
-            String classe = cmbClassificacao.getSelectedItem().toString();
-
-
-            controller.inserirMedicamento(txtMedicamento[0].getText(),txtMedicamento[1].getText(),txtMedicamento[2].getText(), Timestamp.valueOf(spnData.getValue().toString()),Integer.parseInt(txtMedicamento[5].getText()),Integer.parseInt(txtMedicamento[6].getText()),
-                    cmbClassificacao.getSelectedItem().toString(),
-                            cmbFornecedor.getSelectedItem().toString()
-                            ,Integer.parseInt(txtMedicamento[4].getText()));
-
-            for(int i=0;i<txtMedicamento.length;i++){
-                valoresMedicamento[i] = txtMedicamento[i].getText();
-            }
-            valoresMedicamento[8] = cmbClassificacao.getSelectedItem().toString();
-            valoresMedicamento[9] = spnData.toString();
-            controller.inserirMedicamento(valoresMedicamento);
-
-        }
-
-    }
 
     @Override
     public void textValueChanged(TextEvent e) {
@@ -351,6 +318,7 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         gbc.insets=new Insets(10,30,0,30);
 
         incializarElementosDosIngredientes();
+        pnlSecundario.remove(btnRmvIngrediente);
         pnlSecundario.remove(btnAddIngrediente);
 
         gbc.gridx = 5;
@@ -373,12 +341,45 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         gbc.fill = GridBagConstraints.BOTH;
         pnlSecundario.add(listatxtIng.get(listalblIng.size()-1)[1],gbc);
         gbc.gridy = posicaoBtnAddIngredient+2;
+        gbc.fill = GridBagConstraints.NONE;
         gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.FIRST_LINE_END;
         pnlSecundario.add(btnAddIngrediente,gbc);
+        gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+        pnlSecundario.add(btnRmvIngrediente,gbc);
 
 
         posicaoBtnAddIngredient+=2;
 
+    }
+
+    private void removerIngrediente(){
+        int indice = listatxtIng.size()-1;
+        pnlSecundario.remove(listalblIng.get(indice)[0]);
+        pnlSecundario.remove(listalblIng.get(indice)[1]);
+        pnlSecundario.remove(listatxtIng.get(indice)[0]);
+        pnlSecundario.remove(listatxtIng.get(indice)[1]);
+        listatxtIng.remove(indice);
+        listalblIng.remove(indice);
+
+        pnlSecundario.remove(btnAddIngrediente);
+        pnlSecundario.remove(btnRmvIngrediente);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets=new Insets(10,30,0,30);
+
+        gbc.gridx = 7;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        posicaoBtnAddIngredient-=2;
+
+        gbc.gridy = posicaoBtnAddIngredient;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.FIRST_LINE_END;
+        pnlSecundario.add(btnAddIngrediente,gbc);
+        gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+        pnlSecundario.add(btnRmvIngrediente,gbc);
     }
 
     private void incializarComponentes(){
@@ -424,7 +425,7 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
         }
 
-        String []classe = controller.getClassificacao();
+        String []classe = controllerMedicamento.getClassificacao();
         cmbClassificacao = new JComboBox<>(classe);
 
 
@@ -437,7 +438,7 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         lblDosagem[2] = new JLabel("Dosagem para crianças (6-12)");
         lblDosagem[3] = new JLabel("Dosagem para adolescentes (12-18)");
         lblDosagem[4] = new JLabel("Dosagem para adultos (18- )");
-        lblDosagem[5] = new JLabel("Número de vezes por dia");
+
 
 
         for(int i = 0; i<txtDosagem.length;i++){
@@ -457,13 +458,7 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
 
 
-        //botões
-        btnNext.setForeground(atributo.getPainelCor());
-        btnNext.setBackground(atributo.getBotaoPCor());
-        btnNext.addActionListener(this);
-        btnPrevious.setForeground(atributo.getPainelCor());
-        btnPrevious.setBackground(atributo.getBotaoNCor());
-        btnPrevious.addActionListener(this);
+
 
 
 
@@ -501,7 +496,19 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
     }
 
-    private void cenasDoBotao(){
+    private void inicializarBotoes(){
+        //botões
+        btnNext.setForeground(atributo.getPainelCor());
+        btnNext.setBackground(atributo.getBotaoPCor());
+        btnNext.addActionListener(this);
+        btnPrevious.setForeground(atributo.getPainelCor());
+        btnPrevious.setBackground(atributo.getBotaoNCor());
+        btnPrevious.addActionListener(this);
+
+        btnRmvIngrediente.setBackground(atributo.getBotaoNCor());
+        btnRmvIngrediente.setForeground(atributo.getPainelCor());
+        btnRmvIngrediente.addActionListener(this);
+
         btnAddIngrediente.setForeground(atributo.getPainelCor());
         btnAddIngrediente.setBackground(atributo.getBotaoPCor());
         btnAddIngrediente.addActionListener(this);
@@ -520,6 +527,69 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
             lblTexto[i] = atributo.atribuirPadroesLabel(lblTexto[i]);
         }
         return lblTexto;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btnNext){
+            cl.next(this);
+
+
+        }
+        else if(e.getSource()==btnPrevious){
+            cl.previous(this);
+        }
+        else if(e.getSource() == btnAddIngrediente){
+
+            adicionarIngrediente();
+            actualizarPainel(pnlSecundario);
+            actualizarPainel(this);
+
+        }else if (e.getSource() == btnRmvIngrediente){
+            removerIngrediente();
+            actualizarPainel(pnlSecundario);
+            actualizarPainel(this);
+        }
+        else if(e.getSource() == btnSave){
+            String []valoresDosagem = new String[txtDosagem.length];
+            String []valoresMedicamento = new String[lblMedicamento.length];
+            String fornecedor = cmbFornecedor.getSelectedItem().toString();
+            String classe = cmbClassificacao.getSelectedItem().toString();
+
+
+            controllerMedicamento.inserirMedicamento(txtMedicamento[0].getText(),txtMedicamento[1].getText(),txtMedicamento[2].getText(), Timestamp.valueOf(spnData.getValue().toString()),Integer.parseInt(txtMedicamento[5].getText()),Integer.parseInt(txtMedicamento[6].getText()),
+                    cmbClassificacao.getSelectedItem().toString(),
+                    cmbFornecedor.getSelectedItem().toString()
+                    ,Integer.parseInt(txtMedicamento[4].getText()));
+
+            for(int i=0;i<txtMedicamento.length;i++){
+                valoresMedicamento[i] = txtMedicamento[i].getText();
+            }
+
+            for (int i=0; i<valoresDosagem.length;i++){
+                valoresDosagem[i] = txtDosagem[i].getText();
+            }
+
+            valoresMedicamento[8] = cmbClassificacao.getSelectedItem().toString();
+            valoresMedicamento[9] = spnData.toString();
+            boolean sucesso;
+            sucesso = controllerMedicamento.inserirMedicamento(valoresMedicamento);
+
+            sucesso &= controllerMedicamento.inserirDosagem(valoresDosagem);
+
+            for (int i =0;i<listatxtIng.size();i++){
+                String []ingrediente = new String[3];
+                ingrediente[0] = txtMedicamento[0].getText();
+                ingrediente[1] = listatxtIng.get(i)[0].getText();
+                ingrediente[2] = listatxtIng.get(i)[1].getText();
+                sucesso &= ingredienteController.inserirIngrediente(ingrediente);
+            }
+            if(sucesso){
+
+            }
+
+        }
+
     }
 
 

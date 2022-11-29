@@ -392,6 +392,25 @@ public class Conexao {
 
     }
 
+    public boolean inserirDosagem(Dosagem dosagem){
+        String query = "";
+        query = "INSERT INTO `dosagem`(`batchNo`,`baby`, `child`, `toddler`, `teen`, `adult`) VALUES (" +
+                dosagem+")";
+
+        try {
+            statement.executeUpdate(query);
+
+            connection.close();
+            return true;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+
+        }
+    }
+
 
     public boolean actualizar(Object tabela, String []clnAlteradas, String []novosVlrs,
                               String []clnIdetificacao, String []vlrIdentificacao) {

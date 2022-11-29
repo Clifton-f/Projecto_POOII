@@ -1,6 +1,7 @@
 package com.company.Controller;
 
 import com.company.Model.Conexao;
+import com.company.Model.Dosagem;
 import com.company.Model.Medicamento;
 
 import java.sql.Timestamp;
@@ -160,4 +161,10 @@ public class MedicamentoController {
     }
 
 
+    public boolean inserirDosagem(String []valores){
+        Dosagem dosagem = new Dosagem(valores);
+        boolean sucesso = conexao.inserirDosagem(dosagem);
+
+        return sucesso;
+    }
 }

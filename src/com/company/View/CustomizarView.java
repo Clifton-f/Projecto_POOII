@@ -93,10 +93,12 @@ public class CustomizarView {
     public static void main(String[]args){
         System.out.println();
     }
+
     public void definirAtributosPadraoTextFields(){
 
 
     }
+
     public JTextField atribuirPadroesTextFields(JTextField textField){
         textField.setFont(textFieldPadrao.getFont());
         textField.setPreferredSize(textFieldPadrao.getPreferredSize());
@@ -113,9 +115,11 @@ public class CustomizarView {
 
         return label;
     }
+
     public void actualizarPainel(JPanel pnl){
 
         pnl.revalidate();
         pnl.repaint();
     }
+
 }
