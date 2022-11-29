@@ -3,9 +3,7 @@ package com.company.Controller;
 import com.company.Apoio.ConversaoDS;
 import com.company.Model.Conexao;
 import com.company.Model.Fornecedor;
-import com.company.Model.Funcionario;
 
-import java.sql.*;
 import java.util.ArrayList;
 
 public class FornecedorController {
@@ -17,7 +15,7 @@ public class FornecedorController {
     public FornecedorController(){
 
     }
-    public boolean addFornecedor(String contacto, String nome, String email, String endereco){
+    public boolean inserirFornecedor(String contacto, String nome, String email, String endereco){
         Fornecedor novoFrnecedor = new Fornecedor(contacto,nome,endereco,email);
         if(conexao.inserir(novoFrnecedor)){
             return true;

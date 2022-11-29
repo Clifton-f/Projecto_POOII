@@ -1,5 +1,6 @@
 package com.company.View;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.Collections;
@@ -10,13 +11,14 @@ public class CustomizarView {
     private Color botaoNCor = new Color(231,76,60);
     private Color sidemenuCor = new Color(51,51,51);
     private Color painelCor = new Color(221,221,221);
-    private Font textoH1 = new Font("Montserrat",Font.BOLD,36);
-    private Font textoH2 = new Font("Montserrat", Font.BOLD,16);
+    private Font textoH1 = new Font("Montserrat",Font.BOLD,20);
+    private Font textoH2 = new Font("Montserrat", Font.BOLD,20);
     private  Font textoCorpo = new Font("Montserrat",Font.PLAIN, 12);
     private Color textoCor = new Color(51,51,51);
-    private Dimension tamanhoMedT = new Dimension(560,36);
+    private Dimension tamanhoMedT = new Dimension(560,24);
     private Dimension tamanhoMin = new Dimension();
     private Dimension tamanhoMax = new Dimension();
+    JTextField textFieldPadrao = new JTextField();
 
 
 
@@ -39,12 +41,18 @@ public class CustomizarView {
 
     public CustomizarView() {
 
-        textoH1 = textoH1.deriveFont(
+        textoH2 = textoH2.deriveFont(
                 Collections.singletonMap(
                         TextAttribute.WEIGHT, TextAttribute.WEIGHT_SEMIBOLD));
 
 
-        this.textoCorpo = textoCorpo;
+
+        this.textFieldPadrao.setFont(textoCorpo);
+
+        this.textFieldPadrao.setPreferredSize(this.getTamanhoMedT());
+        this.textFieldPadrao.setMinimumSize(this.tamanhoMin);
+        this.textFieldPadrao.setMaximumSize(this.getTamanhoMedT());
+
     }
 
 
@@ -82,7 +90,32 @@ public class CustomizarView {
         return sidemenuCor;
     }
 
-public static void main(String[]args){
+    public static void main(String[]args){
         System.out.println();
-}
+    }
+    public void definirAtributosPadraoTextFields(){
+
+
+    }
+    public JTextField atribuirPadroesTextFields(JTextField textField){
+        textField.setFont(textFieldPadrao.getFont());
+        textField.setPreferredSize(textFieldPadrao.getPreferredSize());
+        textField.setMinimumSize(textFieldPadrao.getMinimumSize());
+        textField.setMaximumSize(textFieldPadrao.getMaximumSize());
+
+        return textField;
+    }
+
+    public JLabel atribuirPadroesLabel(JLabel label){
+
+        label.setForeground(textoCor);
+        label.setFont(textoCorpo);
+
+        return label;
+    }
+    public void actualizarPainel(JPanel pnl){
+
+        pnl.revalidate();
+        pnl.repaint();
+    }
 }

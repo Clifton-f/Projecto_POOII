@@ -1,51 +1,59 @@
 package com.company.View;
 
+import com.company.Controller.FornecedorController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
 
 public class FornecedorView extends JPanel implements ActionListener {
     JLabel lblFornecedor = new JLabel("Adicionar fornecedor");
     JLabel []lblDados  = new JLabel[4];
     JLabel []cabecalho = new JLabel[2];
-    JTextField []txtFornecedor = new JTextField[4];
+    JTextField []txtFornecedor = new JTextField[3];
     JTextField txtNome = new JTextField("Nome");
     JTextField txtEmail= new JTextField("Email");
     JTextField txtContacto = new JTextField("Contacto");
+    JTextField txtPassword = new JTextField("password");
     JTextArea txaEndereco = new JTextArea("Enderesso");
     JButton btnAdd = new JButton("Adicionar");
     JButton btnRmv = new JButton("Remover");
     CustomizarView atributo = new CustomizarView();
+    FornecedorController fornecedorController = new FornecedorController();
+    JSpinner spnData = new JSpinner();
+
 
 
     public FornecedorView(){
 
-        this.setBackground(Color.YELLOW);
+        this.setBackground(atributo.getPainelCor());
         inicializarElementos();
+        System.out.println("passou");
         adicionarElementosAoPainel();
 
 
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnAdd){
-            System.out.println("Funciona");
-        }
-        else if(e.getSource() == btnRmv){
-            System.out.println("Funciona");
-        }
-    }
+
 
     public void inicializarElementos(){
-        JLabel[]lblDados = new JLabel[4];
+        txaEndereco.setPreferredSize(atributo.getTamanhoMedT());
+        //txaEndereco.setFont(atributo.getTextoCorpo());
+
         lblDados[0] = new JLabel("Nome");
         lblDados[1] = new JLabel("Contacto");
         lblDados[2] = new JLabel("Email");
         lblDados[3] = new JLabel("Endereco");
 
+        Date hj = new Date();
+        spnData = new JSpinner(new SpinnerDateModel(hj,null,null, Calendar.MONTH));
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(spnData, "dd/MM/yyyy");
+        spnData.setEditor(editor);
+        spnData.setFont(atributo.getTextoCorpo());
 
 
         btnAdd.addActionListener(this);
@@ -53,7 +61,7 @@ public class FornecedorView extends JPanel implements ActionListener {
 
 
 
-        for (int i = 0; i<4;i++){
+        for (int i = 0; i<txtFornecedor.length;i++){
             txtFornecedor[i] = new JTextField();
             txtFornecedor[i].setPreferredSize(new Dimension(560,36));
 
@@ -93,24 +101,25 @@ public class FornecedorView extends JPanel implements ActionListener {
         this.add(cabecalho[1],gbc);
 
 
-
+        gbc.insets=new Insets(10,30,0,20);
         for(int i=0; i<3; i++){
             gbc.gridy = 2*i+3;
-            gbc.insets=new Insets(10,30,0,20);
+
             this.add(lblDados[i],gbc);
             gbc.gridy =2*i+4;
             this.add(txtFornecedor[i],gbc);
         }
         gbc.gridy = 9;
-        this.add(lblDados[3],gbc);
-        gbc.gridy = 10;
-        //gbc.gridheight=GridBagConstraints.REMAINDER;
 
-        gbc.weighty=1;
-        this.add(txtFornecedor[3],gbc);
+        this.add(lblDados[3],gbc);
+        gbc.gridy =10;
+        this.add(txaEndereco,gbc);
+
+
         gbc.gridheight=GridBagConstraints.REMAINDER;
         gbc.gridx = 1;
-        gbc.gridy=12;
+        gbc.weighty=1;
+        gbc.gridy=14;
 
         JPanel pnlBtn = new JPanel();
         GridLayout gl = new GridLayout(1,2);
@@ -126,8 +135,22 @@ public class FornecedorView extends JPanel implements ActionListener {
 
 
 
-        //this.add(txtMedicamento[3],gbc);
+    }
 
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btnAdd){
+            //funcionarioController.addFuncionario();
+            String nome = txtFornecedor[0].getText();
+            String contacto = txtFornecedor[1].getText();
+            String email = txtFornecedor[2].getText();
+            String endereco = txaEndereco.getText();
+            fornecedorController.inserirFornecedor(contacto,nome,email,endereco);
+        }
+        else if(e.getSource() == btnRmv){
+            System.out.println("Funciona");
+        }
     }
 
     public static void main(String[]args){

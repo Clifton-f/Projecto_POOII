@@ -46,8 +46,8 @@ public class MedicamentoController {
     }
 
 
-    public boolean inserir(String batchNo, String nomeComercial, String nomeGenerico, Timestamp validade,
-                           int precoCompra, int precoVenda, String classe, String fornecedorCnt, int quantidade){
+    public boolean inserirMedicamento(String batchNo, String nomeComercial, String nomeGenerico, Timestamp validade,
+                                      int precoCompra, int precoVenda, String classe, String fornecedorCnt, int quantidade){
 
 
         medicamento = new Medicamento(batchNo,nomeComercial,nomeGenerico,validade,precoCompra,precoVenda,classe,
@@ -57,6 +57,11 @@ public class MedicamentoController {
         return sucesso;
     }
 
+    public boolean inserirMedicamento(String []atributos){
+        medicamento = new Medicamento(atributos);
+        boolean sucesso = conexao.inserir(medicamento);
+        return sucesso;
+    }
     public String[][] lista(){
 
 

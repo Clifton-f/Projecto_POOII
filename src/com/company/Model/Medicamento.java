@@ -26,8 +26,21 @@ public class Medicamento {
         this.preco_venda = preco_venda;
         this.classificacao = classificacao;
         this.contactoFornecedor = contacto;
-
         this.quatidade = quantidade;
+    }
+    public Medicamento(String []medicamento){
+        if(medicamento.length == 10){
+            this.batchNo = medicamento[0];
+            this.nome_comercial = medicamento[1];
+            this.nome_generico = medicamento[2];
+            this.contactoFornecedor = medicamento[3];
+            this.quatidade = Integer.parseInt(medicamento[4]);
+            this.preco_venda = Integer.parseInt(medicamento[5]);
+            this.preco_compra = Integer.parseInt(medicamento[6]);
+            this.descricao = medicamento[7];
+            this.classificacao = medicamento[8];
+            this.validade = Timestamp.valueOf(medicamento[9]);
+        }
     }
 
     ArrayList<Ingrediente> ingredientes = new ArrayList<>();
@@ -126,25 +139,27 @@ public class Medicamento {
         array[0][0] = "batch No.";
         array[0][1] = "Nome comercial";
         array[0][2] = "Nome Genérico";
-        array[0][3] = "validade";
-        array[0][4] = "preco de compra";
+        array[0][3] = "contacto do fornecedor";
+        array[0][4] = "quantidade";
         array[0][5] = "preco de venda";
-        array[0][6] = "classificacao";
-        array[0][7] = "contacto do fornecedor";
-        array[0][8] = "descricao";
-        array[0][9] = "quantidade";
+        array[0][6] = "preco de compra";
+        array[0][7] = "descricao";
+        array[0][8] = "classificacao";
+        array[0][9] = "validade";
 
 
         array[1][0] = this.batchNo;
         array[1][1] = this.nome_comercial;
         array[1][2] = this.nome_generico;
-        array[1][3] = String.valueOf(this.validade);
-        array[1][4] = String.valueOf(preco_compra);
-        array[1][5] = String.valueOf(preco_venda);
-        array[1][6] = classificacao;
-        array[1][7] = contactoFornecedor;
-        array[1][8] = descricao;
-        array[1][9] = String.valueOf(quatidade);
+        array[1][3] = this.contactoFornecedor;
+        array[1][4] = String.valueOf(this.quatidade);
+        array[1][5] = String.valueOf(this.preco_venda);
+        array[1][6] = String.valueOf(this.preco_compra);
+        array[1][7] = this.descricao;
+        array[1][8] = this.classificacao;
+        array[1][9] = String.valueOf(this.validade);
+
+
 
         return array;
     }

@@ -23,7 +23,7 @@ public class Tela implements ActionListener{
     CardLayout lyCentro = new CardLayout();
     BorderLayout lyWorkspc = new BorderLayout();
     JPanel pnlWorkspc = new JPanel();
-    VendaView pnlVenda = new VendaView();
+    VendaView ViewVenda = new VendaView();
     MenuView pnlMenu = new MenuView();
 
 
@@ -35,7 +35,7 @@ public class Tela implements ActionListener{
         /*Segunda tela*/
         //Centro
         pnlCentro.setLayout(lyCentro);
-        pnlCentro.add("venda",pnlVenda);
+        pnlCentro.add("venda", ViewVenda.pnlVenda);
         pnlCentro.add("fornecedor",pnlFornecedor);
         pnlCentro.add("medicamento",pnlMedicamento);
         pnlCentro.add("funcionario",pnlFuncionario);
@@ -95,7 +95,6 @@ public class Tela implements ActionListener{
 
             if (funcionarioController.login(pnlLogin.txtEmail.getText(), String.valueOf(pnlLogin.password.getPassword()))){
                 lyTela.show(pnlTela,"workspace");
-                System.out.println(funcionarioController.getFuncionario());
             }else{
                 System.out.println("erro");
             }
