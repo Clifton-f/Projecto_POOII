@@ -15,35 +15,39 @@ public class FornecedorController {
     public FornecedorController(){
 
     }
-    public boolean inserirFornecedor(String contacto, String nome, String email, String endereco){
-        Fornecedor novoFrnecedor = new Fornecedor(contacto,nome,endereco,email);
-        if(conexao.inserir(novoFrnecedor)){
+    public boolean inserirFornecedor(String contacto, String nome, String email, String endereco) {
+        Fornecedor novoFrnecedor = new Fornecedor(contacto, nome, endereco, email);
+        if (conexao.inserir(novoFrnecedor)) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
     }
 
-    public String[][]listarFornecedores(){
+        public String[] atributos () {
+        String []atributos = conexao.consultarFornecedor().get(0).toArray()[0];
 
-
-        ArrayList<Fornecedor> fornecedores = new ArrayList<>();
-        fornecedores = conexao.consultarFornecedor();
-        lista = new String[fornecedores.size()][7];
-        lista[0] = (String[]) fornecedores.toArray()[0];
-        for(int i = 0; i<fornecedores.size();i++) {
-            String [][]array = fornecedores.get(i).toArray();
-            lista[i+1] = array[1];
-
-
-
+        return atributos;
         }
 
+        public String[][] listarFornecedores () {
 
-        return lista;
 
-    }
+            ArrayList<Fornecedor> fornecedores = new ArrayList<>();
+            fornecedores = conexao.consultarFornecedor();
+            lista = new String[fornecedores.size()-1][7];
+            for (int i = 1; i < fornecedores.size(); i++) {
+                String[][] array = fornecedores.get(i).toArray();
+                lista[i-1] = array[1];
+
+
+            }
+
+
+            return lista;
+
+        }
 
 
 

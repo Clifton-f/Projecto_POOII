@@ -45,6 +45,7 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
     private GridBagConstraints gbc = new GridBagConstraints();
     private final JPanel pnlPrimario = new JPanel();
     private final JPanel pnlSecundario = new JPanel();
+    private final JPanel pnlListaMedicamento = new JPanel();
     private final JPanel pnlMedicamento[] = new JPanel[2];
     JLabel lblSubtituloPn2;
     JLabel lblTituloPn2;
@@ -66,9 +67,12 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
 
         setPnlPrimario();
         setPnlSecundario();
+        setPnlListaMedicamento();
         this.setLayout(cl);
         this.add("1",pnlPrimario);
         this.add("2",pnlSecundario);
+
+
 
     }
 
@@ -275,6 +279,10 @@ public class MedicamentoView extends JPanel implements ActionListener, TextListe
         pnlSecundario.add(btnSave,gbc);
 
 
+
+    }
+
+    private void setPnlListaMedicamento(){
 
     }
 

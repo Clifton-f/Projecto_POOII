@@ -41,8 +41,8 @@ public class Tela implements ActionListener{
         pnlCentro.add("funcionario",pnlFuncionario);
 
         //Oeste
-        for(int i = 0; i<pnlMenu.buttons.length;i++){
-            pnlMenu.buttons[i].addActionListener(this);
+        for(int i = 0; i<pnlMenu.buttonsSideBar.length; i++){
+            pnlMenu.buttonsSideBar[i].addActionListener(this);
         }
 
         //adicoes
@@ -53,8 +53,9 @@ public class Tela implements ActionListener{
 
 
 
+
         pnlWorkspc.add(pnlCentro, BorderLayout.CENTER);
-        pnlWorkspc.add(pnlMenu.menuBar, BorderLayout.SOUTH);
+        //pnlWorkspc.add(pnlMenu.menuBar, BorderLayout.SOUTH);
 
 
         pnlTela.setLayout(lyTela);
@@ -104,24 +105,24 @@ public class Tela implements ActionListener{
             System.out.println("placeholder");
 
 
-        }else if(e.getSource() == pnlMenu.buttons[0]){
+        }else if(e.getSource() == pnlMenu.buttonsSideBar[0]){
             lyCentro.show(pnlCentro,"venda");
 
 
         }
-        else if(e.getSource() == pnlMenu.buttons[1]){
+        else if(e.getSource() == pnlMenu.buttonsSideBar[1]){
             lyCentro.show(pnlCentro,"medicamento");
 
 
 
         }
-        else if(e.getSource() == pnlMenu.buttons[2]){
+        else if(e.getSource() == pnlMenu.buttonsSideBar[2]){
             lyCentro.show(pnlCentro,"fornecedor");
 
 
 
         }
-        else if(e.getSource() == pnlMenu.buttons[3]){
+        else if(e.getSource() == pnlMenu.buttonsSideBar[3]){
             lyCentro.show(pnlCentro,"funcionario");
 
 
