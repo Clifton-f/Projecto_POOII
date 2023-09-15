@@ -1,6 +1,6 @@
 package com.company.Model;
 
-import java.sql.Array;
+
 import java.sql.Timestamp;
 
 public class Funcionario {
@@ -73,12 +73,13 @@ private String tabela = "funcionario";
 
     @Override
     public String toString() {
-        return  "'" + apelido +
+        return  "'" + idFuncionaro  +
+                "', '"  + apelido +
                 "', '" + nome +
-                "', '" + dataNascimento +
                 "', '" + contacto +
-                "', '" + idFuncionaro +
-                "', '" + email +"'";
+                "', '" + email+
+                "', '" + dataNascimento +
+                "'";
     }
 
 

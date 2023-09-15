@@ -285,5 +285,6 @@ public class FornecedorView extends JPanel implements ActionListener, ListSelect
         tela.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         tela.setSize(new Dimension(1280,720));
         tela.setVisible(true);
+        System.out.println();
     }
 }

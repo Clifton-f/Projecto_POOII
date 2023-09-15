@@ -2,8 +2,10 @@ package com.company.View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Login  extends JPanel{
+public class Login  extends JPanel implements ActionListener {
     JButton btnLogin = new JButton("Entrar");
     JButton btnRegistar = new JButton("Registar");
     JTextField txtEmail = new JTextField("admin");
@@ -16,9 +18,11 @@ public class Login  extends JPanel{
         btnLogin.setBackground(propriedades.getBotaoPCor());
         btnLogin.setFont(propriedades.getTextoCorpo());
         btnLogin.setActionCommand("Login");
+        btnLogin.addActionListener(this);
         btnRegistar.setBackground(propriedades.getBotaoPCor());
         btnRegistar.setFont(propriedades.getTextoCorpo());
         btnRegistar.setActionCommand("Registar");
+        btnRegistar.addActionListener(this);
         txtEmail.setFont(propriedades.getTextoCorpo());
         password.setFont(propriedades.getTextoCorpo());
 
@@ -58,15 +62,21 @@ public class Login  extends JPanel{
         gbc.anchor=GridBagConstraints.LINE_START;
         add(btnRegistar,gbc);
 
+
     }
+
     public static void main(String[]args){
         JFrame tela = new JFrame();
         tela.add(new Login());
         tela.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         tela.setSize(new Dimension(1280,720));
         tela.setVisible(true);
+
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
 
+    }
 }
